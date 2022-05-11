@@ -25,6 +25,6 @@ Auth::routes(['verify' => true]);
 //Route::get('/', [FilmeController::class, 'index'])->name('exibicao.index');
 
 Route::get('/', [App\Http\Controllers\FilmeController::class, 'index'])->name('filme');
-Route::get('/detalheFilme', [App\Http\Controllers\FilmeDetalheController::class, 'index'])->name('detalhe_filme');
+Route::get('/detalheFilme', [App\Http\Controllers\FilmeController::class, 'detalheFilme'])->name('detalhe_filme');
 
 Route::get('/admin', [App\Http\Controllers\AuthController::class, 'dashboard'])->name('admin');

@@ -18,4 +18,9 @@ class FilmeController extends Controller
         $filmes = Filme::paginate(15);
         return view('exibicao.index')->withFilmes($filmes);
     }
+
+
+    public function detalheFilme(){
+        return view('exibicao.detalhe');
+    }
 }
