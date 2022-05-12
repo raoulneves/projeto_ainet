@@ -26,5 +26,13 @@ Auth::routes(['verify' => true]);
 
 Route::get('/', [App\Http\Controllers\FilmeController::class, 'index'])->name('filme');
 Route::get('/detalheFilme', [App\Http\Controllers\FilmeController::class, 'detalheFilme'])->name('detalhe_filme');
+Route::get('exibicao/detalhe', [FilmeController::class, 'detalheFilme'])->name('exibicao.detalhe');
 
-Route::get('/admin', [App\Http\Controllers\AuthController::class, 'dashboard'])->name('admin');
+//Route::get('/admin', [App\Http\Controllers\AuthController::class, 'dashboard'])->name('admin');
+
+
+/*Route::middleware([VerifyIfIsAdmin::class])->group(function () {
+    //dashboard
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+});*/

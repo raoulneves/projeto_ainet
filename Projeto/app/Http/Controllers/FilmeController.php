@@ -20,7 +20,10 @@ class FilmeController extends Controller
     }
 
 
-    public function detalheFilme(){
-        return view('exibicao.detalhe');
+    public function detalheFilme(Request $request){
+        $filmes = Filme::all();
+        $key = $request->key;
+
+        return view('exibicao.detalhe')->withFilmes($filmes);
     }
 }
