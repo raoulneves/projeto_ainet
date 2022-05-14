@@ -1,12 +1,43 @@
+<style>
+    #img{
+        display: inline-block;
+        position: relative;
+    }
+
+
+    #img img{
+        position: relative;
+        max-width:100%;
+        max-height:50%;
+        width: auto;
+        height: auto;
+        display: inline-block;
+
+    }
+
+
+
+    #img h1{
+        position:absolute;
+        text-align: center;
+        color: white;
+        text-shadow: 0px 0px 5px black;
+        left: 33%;
+        top:45%;
+    }
+</style>
+
 @extends('layouts.app')
 
 @section('content')
     <!-- Header-->
-    <header class="bg-dark py-5">
+    <header>
         <div class="container px-4 px-lg-5 my-5">
-            <div class="text-center text-white">
+            <div class="text-center text-white" id="img">
+                <img src="{{ Storage::url('header/cinema.jpg') }}">
                 <h1 class="display-4 fw-bolder">Filmes em Exibição</h1>
                 <p class="lead fw-normal text-white-50 mb-0">hehehehehehhehhehehhe</p>
+                <a href="#filme">botão</a>
             </div>
         </div>
     </header>
@@ -17,7 +48,7 @@
                 <form action="{{ route('exibicao.detalhe') }}" method="GET">
                     @foreach ($filmes as $filme)
                         <div class="col mb-5">
-                            <div class="card h-100">
+                            <div class="card h-100" id="filme">
                                 <!-- Product image-->
                                 <img class="card-img-top"
                                     src="{{ Storage::url('cartazes/' . $filme->cartaz_url) }}" alt="..." />
@@ -33,9 +64,9 @@
                                     </div>
                                 </div>
                                 <!-- Product actions-->
-                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <!--<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                     <button type="submit" class="text-center btn btn-outline-dark mt-auto">Ver Detalhes</button>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                 </form>

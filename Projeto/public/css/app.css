@@ -7289,10 +7289,10 @@ textarea.form-control-lg {
   margin-bottom: 1.5rem !important;
 }
 
-.my-5 {
+/*.my-5 {
   margin-top: 3rem !important;
   margin-bottom: 3rem !important;
-}
+}*/
 
 .my-auto {
   margin-top: auto !important;
@@ -7455,10 +7455,10 @@ textarea.form-control-lg {
   padding-left: 1rem !important;
 }
 
-.px-4 {
+/*.px-4 {
   padding-right: 1.5rem !important;
   padding-left: 1.5rem !important;
-}
+}*/
 
 .px-5 {
   padding-right: 3rem !important;
@@ -9783,10 +9783,10 @@ textarea.form-control-lg {
     padding-left: 1.5rem !important;
   }
 
-  .px-lg-5 {
+  /*.px-lg-5 {
     padding-right: 3rem !important;
     padding-left: 3rem !important;
-  }
+  }*/
 
   .py-lg-0 {
     padding-top: 0 !important;
