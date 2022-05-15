@@ -4,7 +4,7 @@
         position: relative;
     }
 
-    #filme:hover{
+    #hover:hover{
     -webkit-filter: blur(2px);
     filter: blur(2px);
     }
@@ -51,26 +51,21 @@
                 <form action="{{ route('exibicao.detalhe') }}" method="GET">
                     @foreach ($filmes as $filme)
                         <div class="col mb-5">
-                            <div class="card h-100" id="filme">
-                                <!-- Product image-->
-                                <img class="card-img-top"
-                                    src="{{ Storage::url('cartazes/' . $filme->cartaz_url) }}" alt="..." />
-                                <!-- Product details-->
-                                <div class="card-body p-4">
-                                    <div class="text-center">
-                                        <!-- Product name-->
-
-                                        <h5 class="fw-bolder">{{ $filme->titulo }}</h5>
-
-                                        <!-- Product price-->
-                                        {{ $filme->genero_code }}
+                            <a type="submit">
+                                <div class="card h-100" id="filme">
+                                    <!-- Product image-->
+                                    <img class="card-img-top" id="hover" src="{{ Storage::url('cartazes/' . $filme->cartaz_url) }}" />
+                                    <!-- Product details-->
+                                    <div class="card-body p-4">
+                                        <div class="text-center">
+                                            <!-- Product name-->
+                                            <h5 class="fw-bolder">{{ $filme->titulo }}</h5>
+                                            <!-- Product price-->
+                                            {{ $filme->genero_code }}
+                                        </div>
                                     </div>
                                 </div>
-                                <!-- Product actions-->
-                                <!--<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                    <button type="submit" class="text-center btn btn-outline-dark mt-auto">Ver Detalhes</button>
-                                </div>-->
-                            </div>
+                            </a>
                         </div>
                 </form>
                 @endforeach
