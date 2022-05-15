@@ -4,6 +4,10 @@
         position: relative;
     }
 
+    #filme:hover{
+    -webkit-filter: blur(2px);
+    filter: blur(2px);
+    }
 
     #img img{
         position: relative;
@@ -12,7 +16,6 @@
         width: auto;
         height: auto;
         display: inline-block;
-
     }
 
 
@@ -33,11 +36,11 @@
     <!-- Header-->
     <header>
         <div class="container px-4 px-lg-5 my-5">
-            <div class="text-center text-white" id="img">
-                <img src="{{ Storage::url('header/cinema.jpg') }}">
-                <h1 class="display-4 fw-bolder">Filmes em Exibição</h1>
-                <p class="lead fw-normal text-white-50 mb-0">hehehehehehhehhehehhe</p>
-                <a href="#filme">botão</a>
+            <div class="text-center text-white">
+                <a href="#filme" id="img">
+                    <img src="{{ Storage::url('header/cinema.jpg') }}">
+                    <h1 class="display-4 fw-bolder">Filmes em Exibição</h1>
+                </a>
             </div>
         </div>
     </header>
