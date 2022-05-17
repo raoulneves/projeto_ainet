@@ -51,7 +51,7 @@
                 <form action="{{ route('exibicao.detalhe') }}" method="GET">
                     @foreach ($filmes as $filme)
                         <div class="col mb-5">
-                            <a type="submit">
+
                                 <div class="card h-100" id="filme">
                                     <!-- Product image-->
                                     <img class="card-img-top" id="hover" src="{{ Storage::url('cartazes/' . $filme->cartaz_url) }}" />
@@ -64,8 +64,9 @@
                                             {{ $filme->genero_code }}
                                         </div>
                                     </div>
+                                    <button type="submit" value="Submit">Ver Detalhes</button>
                                 </div>
-                            </a>
+
                         </div>
                 </form>
                 @endforeach
