@@ -2,7 +2,7 @@
 @section('title','Dashboard' )
 @section('content')
 <div>Some Content . . .</div>
-@endsection
+
 
 
 
@@ -746,3 +746,5 @@
 </body>
 
 </html>
+
+@endsection
