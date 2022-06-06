@@ -8,6 +8,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SalaController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CarrinhoController;
+use App\Http\Middleware\VerifyIfIsAdmin;
 
 
 
@@ -37,37 +38,30 @@ Route::get('pagamento', [PagamentoController::class, 'index'])->name('pagamento.
 
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
 
-    //dashboard
+
+
+    Route::middleware([VerifyIfIsAdmin::class])->group(function () {
+        //dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
+
     //salas
-    //
-    Route::get('/salas', [SalaController::class, 'admin_index'])->name('salas')
-        ->middleware('can:viewAny,App\Models\Sala');
-    Route::get('salas/{sala}/edit', [SalaController::class, 'edit'])->name('salas.edit')
-        ->middleware('can:view,sala');
-    Route::get('salas/create', [SalaController::class, 'create'])->name('salas.create')
-        ->middleware('can:create,App\Models\Sala');
-    Route::delete('salas/{sala}', [SalaController::class, 'destroy'])->name('salas.destroy')
-        ->middleware('can:delete,sala');
-    Route::put('salas/{sala}', [SalaController::class, 'update'])->name('salas.update')
-        ->middleware('can:update,sala');
+    Route::get('/salas', [SalaController::class, 'admin_index'])->name('salas');
+    Route::get('salas/{sala}/edit', [SalaController::class, 'edit'])->name('salas.edit');
+    Route::get('salas/create', [SalaController::class, 'create'])->name('salas.create');
+    Route::delete('salas/{sala}', [SalaController::class, 'destroy'])->name('salas.destroy');
+    Route::put('salas/{sala}', [SalaController::class, 'update'])->name('salas.update');
+        ///
 
     //filmes
-    Route::get('filmes', [FilmeController::class, 'admin_index'])->name('filmes')
-        ->middleware('can:viewAny,App\Models\Filme');
-    Route::get('filmes/{filme}/edit', [FilmeController::class, 'edit'])->name('filmes.edit')
-        ->middleware('can:view,filme');
-    Route::get('filmes/create', [FilmeController::class, 'create'])->name('filmes.create')
-        ->middleware('can:create,App\Models\Filme');
-    Route::post('filmes', [FilmeController::class, 'store'])->name('filmes.store')
-        ->middleware('can:create,App\Models\Filme');
-    Route::put('filmes/{filme}', [FilmeController::class, 'update'])->name('filmes.update')
-        ->middleware('can:update,filme');
-    Route::delete('filmes/{filme}', [FilmeController::class, 'destroy'])->name('filmes.destroy')
-        ->middleware('can:delete,filme');
-    Route::delete('filmes/{filme}/foto', [FilmeController::class, 'destroy_foto'])->name('filmes.foto.destroy')
-        ->middleware('can:update,filme');
+    Route::get('filmes', [FilmeController::class, 'admin_index'])->name('filmes');
+    Route::get('filmes/{filme}/edit', [FilmeController::class, 'edit'])->name('filmes.edit');
+    Route::get('filmes/create', [FilmeController::class, 'create'])->name('filmes.create');
+    Route::post('filmes', [FilmeController::class, 'store'])->name('filmes.store');
+    Route::put('filmes/{filme}', [FilmeController::class, 'update'])->name('filmes.update');
+    Route::delete('filmes/{filme}', [FilmeController::class, 'destroy'])->name('filmes.destroy');
+    Route::delete('filmes/{filme}/foto', [FilmeController::class, 'destroy_foto'])->name('filmes.foto.destroy');
+    });
 });
 
 Auth::routes(['register' => true]);

@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VerifyIfIsAdmin
 {
@@ -11,8 +12,8 @@ class VerifyIfIsAdmin
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
-     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     * @param  \Closure  $next
+     * @return mixed
      */
     public function handle(Request $request, Closure $next)
     {
@@ -21,7 +22,6 @@ class VerifyIfIsAdmin
         if($user->tipo == 'C' || $user->tipo == null){
             return redirect()->route('home')->with('alert-msg', 'Voce nao tem permissao para acessar a esta pagina')->with('alert-type', 'danger');
         }
-
         return $next($request);
     }
 }

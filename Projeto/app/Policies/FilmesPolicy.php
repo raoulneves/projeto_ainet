@@ -19,7 +19,7 @@ class FilmesPolicy
 
     public function viewAny(User $user)
     {
-        return $user->tipo == 'D';
+        return(($user->id==$model->id) || ($user_tipo=='A' && $model->tipo='c'));
     }
 
     public function view(User $user, Filme $filme)

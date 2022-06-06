@@ -33,20 +33,17 @@
                             <td>{{ $filme->titulo }}</td>
                             <td>{{ $filme->genero_code }}</td>
                             <td>{{ $filme->ano }}</td>
-
                             <td>
-                                @can('view', $filme)
                                 <a href="{{route('admin.filmes.edit', ['filme' => $filme])}}" class="btn btn-primary btn-sm" role="button" aria-pressed="true">Alterar</a>
-                                @endcan
                         </td>
                         <td>
-                            @can('delete', $aluno)
+
                                 <form action="{{route('admin.filmes.destroy', ['filme' => $filme])}}" method="POST">
                                     @csrf
                                     @method("DELETE")
                                     <input type="submit" class="btn btn-danger btn-sm" value="Apagar">
                                 </form>
-                            @endcan
+
                         </td>
 
                         </tr>

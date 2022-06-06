@@ -18,7 +18,7 @@ class CarrinhoController extends Controller
 
     public function store_filme(Request $request, Filme $filme){
         $carrinho = $request->session()->get('carrinho', []);
-        $estampa = Filme::find($request->filme_id);
+        $filme = Filme::find($request->filme_id);
         $qtd = ($carrinho[$filme->id]['qtd'] ?? 0) + 1;
         $carrinho[$filme->id] = [
             'id' => $filme->id,
