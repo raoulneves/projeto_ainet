@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Exibicao;
 use Illuminate\Http\Request;
-use App\Models\Filme;
 use App\Models\Genero;
+use App\Models\Filme;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+
 
 class FilmeController extends Controller
 {
@@ -18,7 +19,7 @@ class FilmeController extends Controller
 
 
         $filmes = Filme::paginate(15);
-        return view('exibicao.index')->withFilmes($filmes);
+        return view('exibicao.index')->with('filmes', $filmes);
     }
 
 
@@ -29,7 +30,7 @@ class FilmeController extends Controller
 
     public function admin_index(){
         $filmes = Filme::paginate(10);
-        return view('exibicao.admin')->withFilmes($filmes);
+        return view('exibicao.admin')->with('filmes'. $filmes);
     }
 
     /*public function edit(Aluno $aluno)
@@ -44,8 +45,8 @@ class FilmeController extends Controller
         $genero = Genero::pluck('nome');
         $filme = new Filme;
         return view('alunos.create')
-            ->withFilme($filme)
-            ->withGenero($genero);
+            ->with('filme', $filme)
+            ->with('genero', $genero);
     }
 
     public function destroy(Filme $filme)

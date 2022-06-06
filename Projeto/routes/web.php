@@ -36,6 +36,7 @@ Route::get('pagamento', [PagamentoController::class, 'index'])->name('pagamento.
 
 
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
+
     //dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -52,7 +53,6 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         ->middleware('can:update,sala');
 
     //filmes
- //
     Route::get('filmes', [FilmeController::class, 'admin_index'])->name('filmes')
         ->middleware('can:viewAny,App\Models\Filme');
     Route::get('filmes/{filme}/edit', [FilmeController::class, 'edit'])->name('filmes.edit')
