@@ -41,6 +41,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     //salas
+    //
     Route::get('/salas', [SalaController::class, 'admin_index'])->name('salas')
         ->middleware('can:viewAny,App\Models\Sala');
     Route::get('salas/{sala}/edit', [SalaController::class, 'edit'])->name('salas.edit')
