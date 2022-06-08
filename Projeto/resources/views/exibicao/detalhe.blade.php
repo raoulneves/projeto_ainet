@@ -17,6 +17,9 @@
                                 /
                                 <span>{{ $filme->ano }}</span>
                             </div>
+                            <!-- START  Sessoes filme -->
+                            <p class="lead">{{ $filme->sumario }}</p>
+                            <!-- END    Sessoes filme -->
                             <p class="lead">{{ $filme->sumario }}</p>
                             <p class="lead"><b>Trailer:</b> {{ $filme->trailer_url }}</p>
                             <div class="d-flex">
