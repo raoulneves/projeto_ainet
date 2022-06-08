@@ -1,3 +1,8 @@
+Dentro da pasta \Projeto
+
+copiar o ficheiro .envbackup e nomear a copia como o nome .env:
+cp .envbackup .env
+
 instalar vendor:
 composer install
 
@@ -17,4 +22,6 @@ povuar dados e imagens:
 php artisan migrate:fresh
 composer dump-autoload
 php artisan db:seed
+
+caso instalem algum package adicionem o commado aqui:
 

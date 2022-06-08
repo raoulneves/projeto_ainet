@@ -4,3 +4,6 @@
 /Projeto/public/storage
 /Projeto/.env
 
+Projeto/composer.lock
+Projeto/package.json
+Projeto/package-lock.json
