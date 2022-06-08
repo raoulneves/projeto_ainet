@@ -6,6 +6,7 @@ use App\Models\Exibicao;
 use Illuminate\Http\Request;
 use App\Models\Filme;
 use App\Models\Genero;
+use App\Models\Sessoes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -15,6 +16,10 @@ class FilmeController extends Controller
         //$filmes = DB::table('filmes')->get();
         //dd($filmes);
         //return view('exibicao.index', ['filmes' => $filmes]);
+
+
+        $sessoes = Sessoes::where()
+        $filmes = Filme::where()
 
 
         $filmes = Filme::paginate(15);
