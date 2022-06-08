@@ -51,7 +51,6 @@
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     @foreach ($filmes as $filme)
                         <div class="col mb-5">
-
                             <div class="card h-100" id="filme">
                                 <a href="{{ route('exibicao.detalhe', $filme->id) }}">
                                     <!-- Product image-->

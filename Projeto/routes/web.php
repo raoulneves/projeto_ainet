@@ -32,10 +32,6 @@ Route::put('carrinho/estampas/{estampa}', [CarrinhoController::class, 'update_fi
 Route::post('carrinho', [CarrinhoController::class, 'store_filme'])->name('carrinho.index_post');
 Route::get('pagamento', [PagamentoController::class, 'index'])->name('pagamento.index');
 
-
-
-
-
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
 
 
