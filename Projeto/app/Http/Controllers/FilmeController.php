@@ -7,32 +7,42 @@ use Illuminate\Http\Request;
 use App\Models\Filme;
 use App\Models\Genero;
 use App\Models\Sessoes;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class FilmeController extends Controller
 {
-    public function index(){
-        //$filmes = DB::table('filmes')->get();
-        //dd($filmes);
-        //return view('exibicao.index', ['filmes' => $filmes]);
-
-
-        //$sessoes = Sessoes::where()
-        //$filmes = Filme::where()
-
-
+    public function index()
+    {
+        /*  Feito nas aulas
+        $filmes = DB::table('filmes')->get();
+        dd($filmes);
+        return view('exibicao.index', ['filmes' => $filmes]);
         $filmes = Filme::paginate(15);
-        return view('exibicao.index')->withFilmes($filmes);
+        */
+
+        //Recupera lista com os filme_id dos filmes com data hoje ou posterior
+        $listaSessoes = Sessoes::whereDate('data', '>=', Carbon::now('Europe/Lisbon'))
+            ->pluck('filme_id');
+
+        //Recupera lista com filmes
+        $filmes = Filme::whereIn('id', $listaSessoes)
+            ->get();
+
+
+        return view('exibicao.index')->with('filmes', $filmes);
     }
 
 
-    public function detalheFilme($id){
+    public function detalheFilme($id)
+    {
         $filme = Filme::find($id);
         return view('exibicao.detalhe', compact('filme'));
     }
 
-    public function admin_index(){
+    public function admin_index()
+    {
         $filmes = Filme::paginate(10);
         return view('exibicao.admin')->withFilmes($filmes);
     }
@@ -45,7 +55,8 @@ class FilmeController extends Controller
             ->withCursos($listaCursos);
     }*/
 
-    public function create(){
+    public function create()
+    {
         $genero = Genero::pluck('nome');
         $filme = new Filme;
         return view('alunos.create')
