@@ -18,8 +18,8 @@ class FilmeController extends Controller
         //return view('exibicao.index', ['filmes' => $filmes]);
 
 
-        $sessoes = Sessoes::where()
-        $filmes = Filme::where()
+        //$sessoes = Sessoes::where()
+        //$filmes = Filme::where()
 
 
         $filmes = Filme::paginate(15);
