@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Filme extends Model
 {
     use HasFactory;
-    public $timestamps = false;
+    public $timestamps = true;
     protected $fillable = [
         'id',
         'titulo',
@@ -16,8 +16,11 @@ class Filme extends Model
         'ano',
         'cartaz_url',
         'sumario',
-        'trailer_url',
-        'created_at',
-        'updated_at'
+        'trailer_url'
     ];
+
+    public function genero()
+    {
+        return $this->hasOne(Genero::class,'genero_code');
+    }
 }
