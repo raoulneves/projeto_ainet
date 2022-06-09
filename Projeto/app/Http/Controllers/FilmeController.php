@@ -38,7 +38,11 @@ class FilmeController extends Controller
     public function detalheFilme($id)
     {
         $filme = Filme::find($id);
-        return view('exibicao.detalhe', compact('filme'));
+        $sessoes = Sessoes::whereIn('filme_id', $filme)
+            ->get();
+        return view('exibicao.detalhe')
+            ->withFilme($filme)
+            ->withSessoes($sessoes);
     }
 
     public function admin_index()

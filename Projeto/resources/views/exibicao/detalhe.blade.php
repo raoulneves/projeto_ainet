@@ -18,7 +18,13 @@
                                 <span>{{ $filme->ano }}</span>
                             </div>
                             <!-- START  Sessoes filme -->
-                            <p class="lead">{{ $filme->sumario }}</p>
+                            @foreach ($sessoes as $sessao)
+                                <div class="fs-5 mb-5">
+                                    <span>{{ $sessao->data }}</span>
+                                    /
+                                    <span>{{ $sessao->horario_inicio }}</span>
+                                </div>
+                            @endforeach
                             <!-- END    Sessoes filme -->
                             <p class="lead">{{ $filme->sumario }}</p>
                             <p class="lead"><b>Trailer:</b> {{ $filme->trailer_url }}</p>
