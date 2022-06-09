@@ -7,16 +7,36 @@
         <section class="py-5">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="row gx-4 gx-lg-5 align-items-center">
-                    <div class="col-md-3"><img class="card-img-top mb-5 mb-md-0"
+                    <div class="col-md-4"><img class="card-img-top mb-5 mb-md-0"
                             src="{{ Storage::url('cartazes/' . $filme->cartaz_url) }}" alt="..." /></div>
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                         <form action="{{ route('carrinho.index_post') }}" method="POST">
                             <h1 class="display-5 fw-bolder">{{ $filme->titulo }}</h1>
-                            <div class="fs-5 mb-5">
+                            <div class="fs-5 mb-2">
                                 <span>{{ $filme->genero_code }}</span>
                                 /
                                 <span>{{ $filme->ano }}</span>
                             </div>
+                            <!-- START  Sessoes filme -->
+                            <div class="fs-5 mb-2 table-responsive" style="max-height:150px">
+                                <table class="table table-condensed">
+                                    <tr>
+                                        <th>Data</th>
+                                        <th>Hora Inicio</th>
+                                        <th>Sala</th>
+                                        <th>Vagas</th>
+                                    </tr>
+                                    @foreach ($sessoes as $sessao)
+                                        <tr>
+                                            <td>{{ $sessao->data }}</td>
+                                            <td>{{ $sessao->horario_inicio }}</td>
+                                            <td>{{ $sessao->sala_id }}</td>
+                                            <td>{{ $sessao->seats_remaining }}</td>
+                                        </tr>
+                                    @endforeach
+                                </table>
+                            </div>
+                            <!-- END    Sessoes filme -->
                             <p class="lead">{{ $filme->sumario }}</p>
                             <p class="lead"><b>Trailer:</b> {{ $filme->trailer_url }}</p>
                             <div class="d-flex">

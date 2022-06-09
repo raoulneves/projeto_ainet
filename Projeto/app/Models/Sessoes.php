@@ -13,8 +13,6 @@ class Sessoes extends Model
         'filme_id',
         'sala_id',
         'data',
-        'horario_inicio',
-        'created_at',
-        'updated_at'
+        'horario_inicio'
     ];
 }

@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Exibicao;
 use Illuminate\Http\Request;
 use App\Models\Filme;
-use App\Models\Genero;
+use App\Models\Generos;
 use App\Models\Sessoes;
+use App\Models\Bilhetes;
+use App\Models\Lugares;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -37,14 +39,44 @@ class FilmeController extends Controller
 
     public function detalheFilme($id)
     {
+        //Recupea o filme a partir do id
         $filme = Filme::find($id);
-        return view('exibicao.detalhe', compact('filme'));
+
+        //Recupera as sessoes para um filme
+        $sessoes = Sessoes::where('filme_id', '=', $filme["id"])
+            ->whereDate('data', '>=', Carbon::now('Europe/Lisbon'))
+            ->get();
+
+
+        //Para iterar primeira dimensao do array
+        $sessao_counter = 0;
+        foreach ($sessoes as $sessao) {
+            //Calcula o total de lugares para uma sala
+            $totalSeats = Lugares::where('sala_id', '=', $sessao["sala_id"])->count();
+
+            //Calcula o total de bilhetes para a sessao
+            $totalTicketsSession = Bilhetes::where('sessao_id', '=', $sessao["id"])->count();
+
+            //Calcula as vagas
+            $available_seats = $totalSeats - $totalTicketsSession;
+
+            //Insere o numero de vagas como key => value no array sessoes que é passado
+            $sessoes[$sessao_counter]["seats_remaining"] = $available_seats;
+
+            //Incrementa a var para iterar o array
+            $sessao_counter++;
+
+        }
+
+        return view('exibicao.detalhe')
+            ->with('filme', $filme)
+            ->with('sessoes', $sessoes);
     }
 
     public function admin_index()
     {
         $filmes = Filme::paginate(10);
-        return view('exibicao.admin')->withFilmes($filmes);
+        return view('exibicao.admin')->with('filmes', $filmes);
     }
 
     /*public function edit(Aluno $aluno)
@@ -57,11 +89,11 @@ class FilmeController extends Controller
 
     public function create()
     {
-        $genero = Genero::pluck('nome');
+        $genero = Generos::pluck('nome');
         $filme = new Filme;
         return view('alunos.create')
-            ->withFilme($filme)
-            ->withGenero($genero);
+            ->with('filme', $filme)
+            ->with('genero', $genero);
     }
 
     public function destroy(Filme $filme)
