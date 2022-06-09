@@ -39,6 +39,7 @@ class FilmeController extends Controller
     {
         $filme = Filme::find($id);
         $sessoes = Sessoes::whereIn('filme_id', $filme)
+            ->whereDate('data', '>=', Carbon::now('Europe/Lisbon'))
             ->get();
         return view('exibicao.detalhe')
             ->withFilme($filme)
