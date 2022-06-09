@@ -47,9 +47,8 @@ class FilmeController extends Controller
             ->whereDate('data', '>=', Carbon::now('Europe/Lisbon'))
             ->get();
 
-        //dd($sessoes);
 
-
+        //Para iterar primeira dimensao do array
         $sessao_counter = 0;
         foreach ($sessoes as $sessao) {
             //Calcula o total de lugares para uma sala
@@ -58,11 +57,13 @@ class FilmeController extends Controller
             //Calcula o total de bilhetes para a sessao
             $totalTicketsSession = Bilhetes::where('sessao_id', '=', $sessao["id"])->count();
 
-            //$sessoes["seats_remaining"] = ($totalSeats - $totalTicketsSession);
+            //Calcula as vagas
             $available_seats = $totalSeats - $totalTicketsSession;
-            //dd($available_seats);
+
+            //Insere o numero de vagas como key => value no array sessoes que é passado
             $sessoes[$sessao_counter]["seats_remaining"] = $available_seats;
-            //dd($sessoes);
+
+            //Incrementa a var para iterar o array
             $sessao_counter++;
 
         }
