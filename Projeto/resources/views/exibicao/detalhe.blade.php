@@ -23,6 +23,10 @@
                                     <span>{{ $sessao->data }}</span>
                                     /
                                     <span>{{ $sessao->horario_inicio }}</span>
+                                    /
+                                    <span>Sala: {{ $sessao->sala_id }}</span>
+                                    /
+                                    <span>Vagas: {{ $sessao->seats_remaining }}</span>
                                 </div>
                             @endforeach
                             <!-- END    Sessoes filme -->
