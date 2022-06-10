@@ -96,10 +96,8 @@
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }}
-                                <img class="rounded-circle img-thumbnail w-20 h-25"
+                                <img class="rounded-circle img-fluid" style="width: auto; height: 20px;"
                                     src="{{ Auth::user()->foto_url ? asset('storage/fotos/' . Auth::user()->foto_url) : asset('img/default_img.png') }}">
-
-
                             </a>
 
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -124,9 +122,11 @@
                             </ul>
                         </li>
 
+                        <div class="container d-flex align-items-center">
                         <li class="nav-item">
                             <a class="nav-link fas fa-shopping-cart" href="{{ route('carrinho.index') }}"></a>
                         </li>
+                        </div>
 
                     @endguest
                 </ul>
