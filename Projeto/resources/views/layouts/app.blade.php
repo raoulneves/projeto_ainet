@@ -20,7 +20,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    
+
 </head>
 
 <body>
@@ -44,37 +44,36 @@
 
                 </ul>
 
-                <!-- START  Barra Pesquisa -->
-                @if (Route::current()->getName() == 'filme')
-                    <div class="container-fluid">
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#navbarDropdownGenre" aria-controls="navbarDropdownGenre"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarDropdownGenre">
-                            <ul class="navbar-nav">
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink"
-                                        role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Dropdown
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-dark"
-                                        aria-labelledby="navbarDarkDropdownMenuLink">
-                                        <li><a class="dropdown-item" href="#">Action</a></li>
-                                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                @endif
-
-                <!-- END    Barra Pesquisa -->
-
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ms-auto">
+
+                    <!-- START  Barra Pesquisa -->
+                    @if (Route::current()->getName() == 'filme')
+                        <div class="container-fluid">
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#navbarDropdownGenre" aria-controls="navbarDropdownGenre"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarDropdownGenre">
+                                <ul class="navbar-nav">
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Dropdown
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu"
+                                            aria-labelledby="navbarDropdownMenuLink">
+                                            <li><a class="dropdown-item" href="#">Action</a></li>
+                                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    @endif
+                    <!-- END    Barra Pesquisa -->
 
                     <!-- Authentication Links -->
                     @guest
@@ -102,11 +101,17 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+
+                                <!-- PERFIL -->
+                                <a class="dropdown-item" href="{{ route('perfil') }}">
+                                    {{ __('Perfil') }}
+                                </a>
+
+                                <!-- LOGOUT -->
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                   document.getElementById('logout-form').submit();">
+                       document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
-                                <a href="{{ route('perfil') }}">Perfil</a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                     class="d-none">
@@ -114,9 +119,13 @@
                                 </form>
                             </div>
                         </li>
+
+
                         <li class="nav-item">
                             <a class="nav-link fas fa-shopping-cart" href="{{ route('carrinho.index') }}"></a>
                         </li>
+
+
                     @endguest
                 </ul>
                 <!--/div-->
