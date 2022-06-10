@@ -49,7 +49,7 @@
 
                     <!-- START  Barra Pesquisa -->
                     @if (Route::current()->getName() == 'filme')
-                        <div class="container-fluid">
+                        <div class="container">
                             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#navbarDropdownGenre" aria-controls="navbarDropdownGenre"
                                 aria-expanded="false" aria-label="Toggle navigation">
@@ -96,35 +96,37 @@
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }}
-                                <img
-                                    src="{{ Auth::user()->url_foto ? asset('storage/fotos/' . Auth::user()->url_foto) : asset('img/default_img.png') }}">
+                                <img class="rounded-circle img-thumbnail w-20 h-25"
+                                    src="{{ Auth::user()->foto_url ? asset('storage/fotos/' . Auth::user()->foto_url) : asset('img/default_img.png') }}">
+
+
                             </a>
 
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <!-- PERFIL -->
-                                <a class="dropdown-item" href="{{ route('perfil') }}">
-                                    {{ __('Perfil') }}
-                                </a>
+                                <li><a class="dropdown-item" href="{{ route('perfil') }}">
+                                        {{ __('Perfil') }}
+                                    </a>
+                                </li>
 
                                 <!-- LOGOUT -->
-                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                       document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
-                                </a>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+                                </li>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                     class="d-none">
                                     @csrf
                                 </form>
-                            </div>
+                            </ul>
                         </li>
-
 
                         <li class="nav-item">
                             <a class="nav-link fas fa-shopping-cart" href="{{ route('carrinho.index') }}"></a>
                         </li>
-
 
                     @endguest
                 </ul>
