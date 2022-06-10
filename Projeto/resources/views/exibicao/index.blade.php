@@ -28,7 +28,6 @@
         left: 33%;
         top: 45%;
     }
-
 </style>
 
 @extends('layouts.app')
@@ -44,38 +43,69 @@
                 </a>
             </div>
         </div>
-        </header>
-        <!-- Section-->
-        <section class="py-5">
-            <div class="container px-4 px-lg-5 mt-5">
-                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                    @foreach ($filmes as $filme)
-                        <div class="col mb-5">
-                            <div class="card h-100" id="filme">
-                                <a href="{{ route('exibicao.detalhe', $filme->id) }}">
-                                    <!-- Product image-->
-                                    <img class="card-img-top" id="hover"
-                                        src="{{ Storage::url('cartazes/' . $filme->cartaz_url) }}" />
-                                    <!-- Product details-->
-                                    <div class="card-body p-4">
-                                        <div class="text-center">
-                                            <!-- Product name-->
-                                            <h5 class="fw-bolder">{{ $filme->titulo }}</h5>
-                                            <!-- Product price-->
-                                            {{ $filme->genero_code }}
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    @endforeach
+    </header>
+
+    <!-- Small button -->
+    <div class="container px-4 px-lg-5 mt-3">
+        <div class="d-flex bd-highlight align-items-center justify-content-between">
+            <div class="p-2 bd-highlight">
+                <!-- Split dropend button -->
+                <div class="btn-group dropend">
+                    <button type="button" class="btn btn-outline-dark">
+                        Género
+                    </button>
+                    <button type="button" class="btn btn-outline-dark dropdown-toggle dropdown-toggle-split"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="visually-hidden">Toggle Dropright</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
                 </div>
             </div>
-        </section>
-        <!-- Footer-->
-        <footer class="py-5 bg-dark">
-            <div class="container">
-                <p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p>
+            <div class="p-2 bd-highlight">
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Nome do filme..." aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Procurar</button>
+                </form>
             </div>
-        </footer>
-    @endsection
+        </div>
+    </div>
+
+
+    <!-- Section-->
+    <section class="py-1">
+        <div class="container px-2 px-lg-5 mt-3">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                @foreach ($filmes as $filme)
+                    <div class="col mb-5">
+                        <div class="card h-100" id="filme">
+                            <a href="{{ route('exibicao.detalhe', $filme->id) }}">
+                                <!-- Product image-->
+                                <img class="card-img-top" id="hover"
+                                    src="{{ Storage::url('cartazes/' . $filme->cartaz_url) }}" />
+                                <!-- Product details-->
+                                <div class="card-body p-4">
+                                    <div class="text-center">
+                                        <!-- Product name-->
+                                        <h5 class="fw-bolder">{{ $filme->titulo }}</h5>
+                                        <!-- Product price-->
+                                        {{ $filme->genero_code }}
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p>
+        </div>
+    </footer>
+@endsection

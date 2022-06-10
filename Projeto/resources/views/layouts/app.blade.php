@@ -47,34 +47,6 @@
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ms-auto">
 
-                    <!-- START  Barra Pesquisa -->
-                    @if (Route::current()->getName() == 'filme')
-                        <div class="container">
-                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#navbarDropdownGenre" aria-controls="navbarDropdownGenre"
-                                aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon"></span>
-                            </button>
-                            <div class="collapse navbar-collapse" id="navbarDropdownGenre">
-                                <ul class="navbar-nav">
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
-                                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Dropdown
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu"
-                                            aria-labelledby="navbarDropdownMenuLink">
-                                            <li><a class="dropdown-item" href="#">Action</a></li>
-                                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    @endif
-                    <!-- END    Barra Pesquisa -->
-
                     <!-- Authentication Links -->
                     @guest
                         @if (Route::has('login'))
