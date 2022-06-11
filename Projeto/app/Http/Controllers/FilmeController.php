@@ -26,14 +26,32 @@ class FilmeController extends Controller
 
         //Recupera lista com os filme_id dos filmes com data hoje ou posterior
         $listaSessoes = Sessoes::whereDate('data', '>=', Carbon::now('Europe/Lisbon'))
+            ->groupBy('filme_id')
             ->pluck('filme_id');
 
         //Recupera lista com filmes
         $filmes = Filme::whereIn('id', $listaSessoes)
             ->get();
 
+        $genres = Generos::all();
 
-        return view('exibicao.index')->with('filmes', $filmes);
+
+        return view('exibicao.index')
+            ->with('filmes', $filmes)
+            ->with('genres', $genres);
+    }
+
+    public function index_filter(Request $request)
+    {
+        $genres = Generos::all();
+        $key = $request->key;
+        $filmes = Filme::where('titulo', 'LIKE', '%' . $key .'%')
+            ->orwhere('sumario', 'LIKE', '%' . $key .'%')
+            ->paginate(15);
+
+        return view('exibicao.index')
+            ->with('filmes', $filmes)
+            ->with('genres', $genres);
     }
 
 

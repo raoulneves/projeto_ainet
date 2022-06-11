@@ -24,6 +24,7 @@ use App\Http\Middleware\VerifyIfIsAdmin;
 */
 
 Route::get('/', [FilmeController::class, 'index'])->name('filme');
+Route::get('index_filter', [FilmeController::class, 'index_filter'])->name('index_filter');
 Route::get('/detalheFilme', [FilmeController::class, 'detalheFilme'])->name('detalhe_filme');
 Route::get('exibicao/detalhe/{filme}', [FilmeController::class, 'detalheFilme'])->name('exibicao.detalhe');
 Route::get('perfil', [UserController::class, 'perfil'])->name('perfil');
@@ -34,10 +35,8 @@ Route::get('pagamento', [PagamentoController::class, 'index'])->name('pagamento.
 
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
 
-
-
     Route::middleware([VerifyIfIsAdmin::class])->group(function () {
-        //dashboard
+    //dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
 
@@ -57,6 +56,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::put('filmes/{filme}', [FilmeController::class, 'update'])->name('filmes.update');
     Route::delete('filmes/{filme}', [FilmeController::class, 'destroy'])->name('filmes.destroy');
     Route::delete('filmes/{filme}/foto', [FilmeController::class, 'destroy_foto'])->name('filmes.foto.destroy');
+    
     });
 });
 
