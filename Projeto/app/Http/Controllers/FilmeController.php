@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Storage;
 
 class FilmeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         /*  Feito nas aulas
         $filmes = DB::table('filmes')->get();
@@ -26,14 +26,43 @@ class FilmeController extends Controller
 
         //Recupera lista com os filme_id dos filmes com data hoje ou posterior
         $listaSessoes = Sessoes::whereDate('data', '>=', Carbon::now('Europe/Lisbon'))
+            ->groupBy('filme_id')
             ->pluck('filme_id');
 
-        //Recupera lista com filmes
-        $filmes = Filme::whereIn('id', $listaSessoes)
-            ->get();
 
+        $genres = Generos::all();
 
-        return view('exibicao.index')->with('filmes', $filmes);
+        //Variavel  com codigo go genero a filtrar por
+        $keygen = $request->keygen;
+        //Verifica se foi filtrado por um genero
+        if (isset($request->keygen)) {
+            $selected_genre = $request->keygen;
+            $filmes = Filme::where('genero_code', '=', $keygen)
+                ->paginate(15);
+        } else {
+            //Recupera lista com filmes
+            $filmes = Filme::whereIn('id', $listaSessoes)
+                ->get();
+            $selected_genre = null;
+        }
+
+        return view('exibicao.index')
+            ->with('filmes', $filmes)
+            ->with('genres', $genres)
+            ->with('selectedgenre', $selected_genre);
+    }
+
+    public function index_filter(Request $request)
+    {
+        $genres = Generos::all();
+        $key = $request->key;
+        $filmes = Filme::where('titulo', 'LIKE', '%' . $key . '%')
+            ->orwhere('sumario', 'LIKE', '%' . $key . '%')
+            ->paginate(15);
+
+        return view('exibicao.index')
+            ->with('filmes', $filmes)
+            ->with('genres', $genres);
     }
 
 
@@ -65,7 +94,6 @@ class FilmeController extends Controller
 
             //Incrementa a var para iterar o array
             $sessao_counter++;
-
         }
 
         return view('exibicao.detalhe')
