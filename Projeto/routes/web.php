@@ -25,7 +25,6 @@ use App\Http\Middleware\VerifyIfIsAdmin;
 
 Route::get('/', [FilmeController::class, 'index'])->name('filme');
 Route::get('index_filter', [FilmeController::class, 'index_filter'])->name('index_filter');
-Route::get('genre_filter', [FilmeController::class, 'genre_filter'])->name('genre_filter');
 Route::get('/detalheFilme', [FilmeController::class, 'detalheFilme'])->name('detalhe_filme');
 Route::get('exibicao/detalhe/{filme}', [FilmeController::class, 'detalheFilme'])->name('exibicao.detalhe');
 Route::get('perfil', [UserController::class, 'perfil'])->name('perfil');
