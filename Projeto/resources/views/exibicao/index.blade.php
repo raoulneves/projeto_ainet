@@ -37,7 +37,7 @@
     <header>
         <div class="container px-4 px-lg-5 my-5">
             <div class="text-center text-white">
-                <a href="#filme" id="img">
+                <a href="{{ route('filme') }}" id="img">
                     <img src="{{ Storage::url('header/cinema.png') }}">
                     <h1 class="display-4 fw-bolder">Filmes em Exibição</h1>
                 </a>
@@ -47,38 +47,25 @@
 
 
     <!-- Rafa search
-            <div class="row">
-                <div class="col-12 col-lg-4">
-                    <form class="disc-search" action="#" method="GET">
-                        <div class="search-item">
-                            <label for="idDisc">Disc:</label>
-                            <select name="categoria" id="idDisc">
-                                foreach ($genres as $genre)
-        <option value=" $genre->id == $genre->id ? 'selected' : '' }}">
-                                         $genre->nome
-                                    </option>
-        endforeach
-                            </select>
-                        </div>
-                        <div class="search-item">
-                            <button type="submit" class="bt" id="btn-filter">Filtrar</button>
-                        </div>
-                    </form>
+    <div class="row">
+        <div class="col-12 col-lg-4">
+            <form class="disc-search" action="#" method="GET">
+                <div class="search-item">
+                    <label for="idDisc">Disc:</label>
+                    <select name="categoria" id="idDisc">
+                        @foreach ($genres as $genre)
+                            <option value=" {{ $genre->id == $genre->id ? 'selected' : '' }}">
+                                {{ $genre->nome }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
-
-                    <div class="col-12 col-lg-4">
-                        <form class="disc-search" action="" method="GET">
-                            <div class="search-item">
-                                <label for="idDisc">Nome / Descrição</label>
-                                <input type="text" id="key" name="key">
-                            </div>
-                            <div class="search-item">
-                                <button type="submit" class="bt" id="btn-filter">Filtrar</button>
-                            </div>
-                        </form>
-                    </div>
-
-            </div>
+                <div class="search-item">
+                    <button type="submit" class="bt" id="btn-filter">Filtrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
     -->
 
 
@@ -87,19 +74,14 @@
         <div class="d-flex bd-highlight align-items-center justify-content-between">
             <div class="p-2 bd-highlight">
                 <!-- Split dropend button -->
-                <div class="btn-group dropend">
-                    <button type="button" class="btn btn-outline-dark">
-                        Género
-                        <button type="button" class="btn btn-outline-dark dropdown-toggle dropdown-toggle-split"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <span class="visually-hidden">Toggle Dropright</span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            @foreach ($genres as $genre)
-                                <li><a class="dropdown-item" href="#">{{ $genre->nome }}</a></li>
-                            @endforeach
-                        </ul>
-                </div>
+                <select class="form-select" aria-label="Default select example">
+                    <option selected>Género:</option>
+                    @foreach ($genres as $genre)
+                        <option value="{{ $genre->id == $genre->id ? 'selected' : '' }}">
+                            {{ $genre->nome }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
             <!-- Search -->
             <div class="p-2 bd-highlight">

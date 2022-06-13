@@ -41,6 +41,19 @@ class FilmeController extends Controller
             ->with('genres', $genres);
     }
 
+    public function genre_filter(Request $request)
+    {
+        $genres = Generos::all();
+        $key = $request->key;
+        $filmes = Filme::where('titulo', 'LIKE', '%' . $key .'%')
+            ->orwhere('sumario', 'LIKE', '%' . $key .'%')
+            ->paginate(15);
+
+        return view('exibicao.index')
+            ->with('filmes', $filmes)
+            ->with('genres', $genres);
+    }
+
     public function index_filter(Request $request)
     {
         $genres = Generos::all();
