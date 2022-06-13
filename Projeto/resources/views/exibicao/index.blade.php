@@ -46,42 +46,22 @@
     </header>
 
 
-    <!-- Rafa search
-    <div class="row">
-        <div class="col-12 col-lg-4">
-            <form class="disc-search" action="#" method="GET">
-                <div class="search-item">
-                    <label for="idDisc">Disc:</label>
-                    <select name="categoria" id="idDisc">
-                        @foreach ($genres as $genre)
-                            <option value=" {{ $genre->id == $genre->id ? 'selected' : '' }}">
-                                {{ $genre->nome }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="search-item">
-                    <button type="submit" class="bt" id="btn-filter">Filtrar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-    -->
-
-
     <!-- Container for Genre filter and Search -->
     <div class="container px-4 px-lg-5 mt-3">
         <div class="d-flex bd-highlight align-items-center justify-content-between">
             <div class="p-2 bd-highlight">
-                <!-- Split dropend button -->
-                <select class="form-select" aria-label="Default select example">
-                    <option selected>Género:</option>
-                    @foreach ($genres as $genre)
-                        <option value="{{ $genre->id == $genre->id ? 'selected' : '' }}">
-                            {{ $genre->nome }}
-                        </option>
-                    @endforeach
-                </select>
+                <!-- Select genre -->
+                <form class="d-flex" action="{{ route('filme') }}" method="GET">
+                    <select class="form-select" aria-label="Default select example" id="keygen" name="keygen"
+                        onchange="this.form.submit();">
+                        <option disabled selected>Género:</option>
+                        @foreach ($genres as $genre)
+                            <option value="{{ $genre->code }}" {{ $genre->code == $selectedgenre ? 'selected' : '' }}>
+                                {{ $genre->nome }}
+                            </option>
+                        @endforeach
+                    </select>
+                </form>
             </div>
             <!-- Search -->
             <div class="p-2 bd-highlight">
