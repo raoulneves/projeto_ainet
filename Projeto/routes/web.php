@@ -48,7 +48,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::post('salas', [SalaController::class, 'store'])->name('salas.store');
     Route::delete('salas/{id}', [SalaController::class, 'delete'])->name('salas.delete');
     Route::put('salas/{sala}', [SalaController::class, 'update'])->name('salas.update');
-        ///
+
 
     //filmes
     Route::get('filmes', [FilmeController::class, 'admin_index'])->name('filmes');
