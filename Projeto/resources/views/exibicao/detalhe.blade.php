@@ -55,7 +55,7 @@
                 </div>
             </div>
         </section>
-        <!-- Related items section teste branch ?-->
+        <!-- Related items section-->
 
         <section class="py-5 bg-light">
             <div class="container px-4 px-lg-5 mt-5">
