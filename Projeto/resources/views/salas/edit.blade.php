@@ -7,7 +7,9 @@
         <input type="hidden" name="user_id" value="{{$sala->id}}">
         @include('salas.partials.create-edit')
         <div class="form-group text-right">
-            <button type="submit" class="btn btn-success" name="ok">Guardar</button>
+            @can('update', $sala)
+                <button type="submit" class="btn btn-success" name="ok">Guardar</button>
+            @endcan
             <a href="{{route('admin.salas.edit', ['sala' => $sala]) }}" class="btn btn-secondary">Cancelar</a>
         </div>
     </form>

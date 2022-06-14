@@ -14,7 +14,7 @@ class Filme extends Model
         'titulo',
         'genero_code',
         'ano',
-        'foto',
+        'cartaz_url',
         'sumario',
         'trailer_url',
         'created_at',
