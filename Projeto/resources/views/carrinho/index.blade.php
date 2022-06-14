@@ -16,7 +16,7 @@
                         @foreach ($carrinho as $row)
                             <tr>
                                 <td>{{ $row['titulo'] }}</td>
-                                <td>{{ $row['genero_code'] }}</td>
+                                <td>{{ $row['genero'] }}</td>
                                 <td>{{ $row['ano'] }}</td>
                                 <td>
                                     <div class="row">

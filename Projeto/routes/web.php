@@ -29,7 +29,8 @@ Route::get('/detalheFilme', [FilmeController::class, 'detalheFilme'])->name('det
 Route::get('exibicao/detalhe/{filme}', [FilmeController::class, 'detalheFilme'])->name('exibicao.detalhe');
 Route::get('perfil', [UserController::class, 'perfil'])->name('perfil');
 Route::get('carrinho', [CarrinhoController::class, 'index'])->name('carrinho.index');
-Route::put('carrinho/estampas/{estampa}', [CarrinhoController::class, 'update_filme'])->name('carrinho.index_update');
+Route::put('carrinho/filmes/{filme}', [CarrinhoController::class, 'update_filme'])->name('carrinho.index_update');
+Route::delete('carrinho/filmes/{filme}', [CarrinhoController::class, 'destroy_filme'])->name('carrinho.index_des');
 Route::post('carrinho', [CarrinhoController::class, 'store_filme'])->name('carrinho.index_post');
 Route::get('pagamento', [PagamentoController::class, 'index'])->name('pagamento.index');
 
@@ -44,7 +45,8 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/salas', [SalaController::class, 'admin_index'])->name('salas');
     Route::get('salas/{sala}/edit', [SalaController::class, 'edit'])->name('salas.edit');
     Route::get('salas/create', [SalaController::class, 'create'])->name('salas.create');
-    Route::delete('salas/{sala}', [SalaController::class, 'destroy'])->name('salas.destroy');
+    Route::post('salas', [SalaController::class, 'store'])->name('salas.store');
+    Route::delete('salas/{id}', [SalaController::class, 'delete'])->name('salas.delete');
     Route::put('salas/{sala}', [SalaController::class, 'update'])->name('salas.update');
         ///
 

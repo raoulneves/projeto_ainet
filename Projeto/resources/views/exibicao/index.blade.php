@@ -28,6 +28,7 @@
         left: 33%;
         top: 45%;
     }
+
 </style>
 
 @extends('layouts.app')
