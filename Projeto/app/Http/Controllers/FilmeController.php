@@ -120,7 +120,7 @@ class FilmeController extends Controller
 
     public function edit(Filme $filme)
     {
-        return view('exibicao.edit')->withFilme($filme);
+        return view('exibicao.edit')->with('filme', $filme);
     }
 
     public function update(FilmePost $request, Filme $filme)

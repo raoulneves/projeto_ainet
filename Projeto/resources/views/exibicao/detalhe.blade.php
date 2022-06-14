@@ -3,6 +3,18 @@
 @section('content')
 
     <body>
+
+        <!-- Message spot -->
+        @if (session()->has('alert-msg'))
+            <div class="container">
+                <div class="alert alert-{{ session()->get('alert-type') }} alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Successo!</strong> {{ session()->get('alert-msg') }}
+                </div>
+            </div>
+        @endif
+        <!-- Message spot -->
+
         <!-- Product section-->
         <section class="py-5">
             <div class="container px-4 px-lg-5 my-5">

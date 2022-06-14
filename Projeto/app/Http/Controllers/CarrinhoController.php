@@ -75,7 +75,7 @@ class CarrinhoController extends Controller
         ];
         $request->session()->put('carrinho', $carrinho);
         return back()
-        ->with('alert-msg', 'Foi adicionado ao carrinho')
+        ->with('alert-msg', 'Foi adicionado ao carrinho!')
         ->with('alert-type', 'success');
     }
 
@@ -84,20 +84,23 @@ class CarrinhoController extends Controller
         $qtd = $carrinho[$filme->id]['qtd'] ?? 0;
         $qtd += $request->quantidade;
         if($request->quantidade < 0){
-            $msg = 'Foram removidas ';
+            $msg = 'Removido ' . $request->quantidade . ' ao carrinho.';
         }
-        elseif ($request-> quantidade > 0){
-            $msg = 'Foram adicionadas';
+        elseif ($request->quantidade > 0){
+            $msg = 'Adicionado ' . $request->quantidade . ' ao carrinho.';
         }
         if($qtd <= 0){
             unset($carrinho[$filme->id]);
-            $msg = 'Foram removidas todos os produtos do carrinho "' . $filme->titulo . '"';
+            $msg = 'Foram removidos todos os produtos do carrinho "' . $filme->titulo . '"';
         }
         else{
             $carrinho[$filme->id]['qtd'] = $qtd;
         }
         $request->session()->put('carrinho', $carrinho);
-        return back();
+
+        return back()
+            ->with('alert-msg', $msg)
+            ->with('alert-type', 'info');
     }
 
     public function destroy_filme(Request $request, Filme $filme){
@@ -106,11 +109,11 @@ class CarrinhoController extends Controller
             unset($carrinho[$filme->id]);
             $request->session()->put('carrinho', $carrinho);
             return back()
-                ->with('alert-msg', 'Foram removidas')
+                ->with('alert-msg', 'Filme removido.')
                 ->with('alert-type', 'success');
         }
         return back()
-            ->with('alert-msg', 'A estampa')
+            ->with('alert-msg', 'Erro')
             ->with('alert-type', 'warning');
     }
 }
