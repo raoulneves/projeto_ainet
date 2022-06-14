@@ -5,15 +5,13 @@
 <div class="container">
     <div class="row mb-3">
         <div class="col-3">
+            @can('create', App\Models\Sala::class)
                 <a href="{{route('admin.salas.create')}}" class="btn btn-success" role="button" aria-pressed="true">Nova Sala</a>
+            @endcan
         </div>
     </div>
     <div class="row justify-content-center">
-        @if(session()->has('success'))
-            <div class="alert alert-success">
-                {{ session()->get('success') }}
-            </div>
-        @endif
+
         <table class="table">
             <thead>
                 <tr>
@@ -27,14 +25,18 @@
                     <tr>
                         <td>{{ $sala->nome }}</td>
                         <td>
-                            <a href="{{route('admin.salas.edit', ['sala' => $sala])}}" class="btn btn-primary btn-sm" role="button" aria-pressed="true">Alterar</a>
+
+                                <a href="{{route('admin.salas.edit', ['sala' => $sala])}}" class="btn btn-primary btn-sm" role="button" aria-pressed="true">Alterar</a>
+
                         </td>
                         <td>
-                            <form method="POST" action="{{route('admin.salas.delete', $sala->id)}}">
-                                @csrf
-                                @method('DELETE')
-                                <button onclick="return confirm('Tem a certeza')" class="btn btn-danger btn-sm">Delete</button>
-                            </form>
+
+                                <form action="{{route('admin.salas.destroy', ['sala' => $sala])}}" method="POST">
+                                    @csrf
+                                    @method("DELETE")
+                                    <input type="submit" class="btn btn-danger btn-sm" value="Apagar">
+                                </form>
+
                         </td>
                     </tr>
                 @endforeach

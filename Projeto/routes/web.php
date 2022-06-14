@@ -24,21 +24,19 @@ use App\Http\Middleware\VerifyIfIsAdmin;
 */
 
 Route::get('/', [FilmeController::class, 'index'])->name('filme');
+Route::get('index_filter', [FilmeController::class, 'index_filter'])->name('index_filter');
 Route::get('/detalheFilme', [FilmeController::class, 'detalheFilme'])->name('detalhe_filme');
 Route::get('exibicao/detalhe/{filme}', [FilmeController::class, 'detalheFilme'])->name('exibicao.detalhe');
 Route::get('perfil', [UserController::class, 'perfil'])->name('perfil');
 Route::get('carrinho', [CarrinhoController::class, 'index'])->name('carrinho.index');
-Route::put('carrinho/filmes/{filme}', [CarrinhoController::class, 'update_filme'])->name('carrinho.index_update');
-Route::delete('carrinho/filmes/{filme}', [CarrinhoController::class, 'destroy_filme'])->name('carrinho.index_des');
+Route::put('carrinho/estampas/{estampa}', [CarrinhoController::class, 'update_filme'])->name('carrinho.index_update');
 Route::post('carrinho', [CarrinhoController::class, 'store_filme'])->name('carrinho.index_post');
 Route::get('pagamento', [PagamentoController::class, 'index'])->name('pagamento.index');
 
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
 
-
-
     Route::middleware([VerifyIfIsAdmin::class])->group(function () {
-        //dashboard
+    //dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
 
@@ -46,10 +44,9 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/salas', [SalaController::class, 'admin_index'])->name('salas');
     Route::get('salas/{sala}/edit', [SalaController::class, 'edit'])->name('salas.edit');
     Route::get('salas/create', [SalaController::class, 'create'])->name('salas.create');
-    Route::post('salas', [SalaController::class, 'store'])->name('salas.store');
-    Route::delete('salas/{id}', [SalaController::class, 'delete'])->name('salas.delete');
+    Route::delete('salas/{sala}', [SalaController::class, 'destroy'])->name('salas.destroy');
     Route::put('salas/{sala}', [SalaController::class, 'update'])->name('salas.update');
-
+        ///
 
     //filmes
     Route::get('filmes', [FilmeController::class, 'admin_index'])->name('filmes');
@@ -59,6 +56,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::put('filmes/{filme}', [FilmeController::class, 'update'])->name('filmes.update');
     Route::delete('filmes/{filme}', [FilmeController::class, 'destroy'])->name('filmes.destroy');
     Route::delete('filmes/{filme}/foto', [FilmeController::class, 'destroy_foto'])->name('filmes.foto.destroy');
+
     });
 });
 
