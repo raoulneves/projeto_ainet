@@ -10,16 +10,14 @@ class SalaController extends Controller
 {
     public function admin_index(){
         $salas = Sala::paginate(10);
+        //$salas = $sala->get();
         return view('salas.admin')->withSalas($salas);
     }
 
-   /*public function create(){
-        $genero = Genero::pluck('nome');
-        $filme = new Filme;
-        return view('alunos.create')
-            ->withFilme($filme)
-            ->withGenero($genero);
-    }*/
+    public function delete(Sala $sala){
+        $sala->delete();
+        return back();
+    }
 
     public function edit(Sala $sala)
     {
@@ -35,6 +33,21 @@ class SalaController extends Controller
         $sala->save();
         return redirect()->route('admin.salas')
             ->with('alert-msg', 'Sala "' . $sala->nome . '" foi alterado com sucesso!')
+            ->with('alert-type', 'success');
+    }
+
+    public function create()
+    {
+        $sala = new Sala;
+        return view('salas.create')
+            ->with('sala', $sala);
+    }
+
+    public function store(SalaPost $request)
+    {
+        $newSala = Sala::create($request->validated());
+        return redirect()->route('admin.salas')
+            ->with('alert-msg', 'Sala "' . $newSala->nome . '" foi criada com sucesso!')
             ->with('alert-type', 'success');
     }
 

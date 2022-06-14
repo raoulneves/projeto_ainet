@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Exibicao;
 use Illuminate\Http\Request;
 use App\Models\Filme;
 use App\Models\Generos;
@@ -10,12 +9,12 @@ use App\Models\Sessoes;
 use App\Models\Bilhetes;
 use App\Models\Lugares;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\FilmePost;
 
 class FilmeController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         /*  Feito nas aulas
         $filmes = DB::table('filmes')->get();
@@ -26,48 +25,28 @@ class FilmeController extends Controller
 
         //Recupera lista com os filme_id dos filmes com data hoje ou posterior
         $listaSessoes = Sessoes::whereDate('data', '>=', Carbon::now('Europe/Lisbon'))
-            ->groupBy('filme_id')
             ->pluck('filme_id');
 
+        //Recupera lista com filmes
+        $filmes = Filme::whereIn('id', $listaSessoes)
+            ->get();
 
-        $genres = Generos::all();
 
-        //Variavel  com codigo go genero a filtrar por
-        $keygen = $request->keygen;
-        //Verifica se foi filtrado por um genero
-        if (isset($request->keygen)) {
-            $selected_genre = $request->keygen;
-            $filmes = Filme::where('genero_code', '=', $keygen)
-                ->paginate(15);
-        } else {
-            //Recupera lista com filmes
-            $filmes = Filme::whereIn('id', $listaSessoes)
-                ->get();
-            $selected_genre = null;
-        }
-
-        return view('exibicao.index')
-            ->with('filmes', $filmes)
-            ->with('genres', $genres)
-            ->with('selectedgenre', $selected_genre);
-    }
-
-    public function index_filter(Request $request)
-    {
-        $genres = Generos::all();
-        $key = $request->key;
-        $filmes = Filme::where('titulo', 'LIKE', '%' . $key . '%')
-            ->orwhere('sumario', 'LIKE', '%' . $key . '%')
-            ->paginate(15);
-
-        return view('exibicao.index')
-            ->with('filmes', $filmes)
-            ->with('genres', $genres);
+        return view('exibicao.index')->with('filmes', $filmes);
     }
 
 
     public function detalheFilme($id)
     {
+        //Recupera lista com os filme_id dos filmes com data hoje ou posterior
+        $listaSessoes = Sessoes::whereDate('data', '>=', Carbon::now('Europe/Lisbon'))
+            ->paginate(4)
+            ->pluck('filme_id');
+
+        //Recupera lista com filmes
+        $filmesRelacionados = Filme::whereIn('id', $listaSessoes)
+            ->get();
+
         //Recupea o filme a partir do id
         $filme = Filme::find($id);
 
@@ -98,7 +77,8 @@ class FilmeController extends Controller
 
         return view('exibicao.detalhe')
             ->with('filme', $filme)
-            ->with('sessoes', $sessoes);
+            ->with('sessoes', $sessoes)
+            ->with('filmesRelacionados', $filmesRelacionados);
     }
 
     public function admin_index()
@@ -107,13 +87,29 @@ class FilmeController extends Controller
         return view('exibicao.admin')->with('filmes', $filmes);
     }
 
-    /*public function edit(Aluno $aluno)
+    public function edit(Filme $filme)
     {
-        $listaCursos = Curso::pluck('nome', 'abreviatura');
-        return view('alunos.edit')
-            ->withAluno($aluno)
-            ->withCursos($listaCursos);
-    }*/
+        return view('exibicao.edit')->withFilme($filme);
+    }
+
+    public function update(FilmePost $request, Filme $filme)
+    {
+        $validated_data = $request->validated();
+        $filme->titulo = $validated_data['titulo'];
+        $filme->genero_code = $validated_data['genero_code'];
+        $filme->ano = $validated_data['ano'];
+        $filme->sumario = $validated_data['sumario'];
+        $filme->trailer_url = $validated_data['trailer'];
+        if ($request->hasFile('foto')) {
+            Storage::delete('cartazes/' . $filme->cartaz_url);
+            $path = $request->cartaz_url->store('cartazes');
+            $filme->cartaz_url = basename($path);
+        }
+        $filme->save();
+        return redirect()->route('admin.filmes')
+            ->with('alert-msg', 'Filme "' . $filme->titulo . '" foi alterado com sucesso!')
+            ->with('alert-type', 'success');
+    }
 
     public function create()
     {
@@ -122,6 +118,14 @@ class FilmeController extends Controller
         return view('alunos.create')
             ->with('filme', $filme)
             ->with('genero', $genero);
+    }
+
+    public function store(FilmePost $request)
+    {
+        $newFilme = Filme::create($request->validated());
+        return redirect()->route('admin.filmes')
+            ->with('alert-msg', 'Disciplina "' . $newFilme->Titulo . '" foi criada com sucesso!')
+            ->with('alert-type', 'success');
     }
 
     public function destroy(Filme $filme)

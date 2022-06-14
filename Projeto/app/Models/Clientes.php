@@ -5,18 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Filme extends Model
+class Clientes extends Model
 {
     use HasFactory;
     public $timestamps = false;
     protected $fillable = [
         'id',
-        'titulo',
-        'genero_code',
-        'ano',
-        'foto',
-        'sumario',
-        'trailer_url',
+        'nif',
+        'tipo_pagamento',
+        'ref_pagamento',
+        'deleted_at',
         'created_at',
         'updated_at'
     ];
