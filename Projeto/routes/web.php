@@ -9,6 +9,7 @@ use App\Http\Controllers\SalaController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CarrinhoController;
 use App\Http\Middleware\VerifyIfIsAdmin;
+use App\Http\Controllers\PagamentoController;
 
 
 
