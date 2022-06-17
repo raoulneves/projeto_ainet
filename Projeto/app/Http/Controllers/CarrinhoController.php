@@ -8,16 +8,110 @@ use Illuminate\Http\Request;
 use App\Models\Carrinho;
 use App\Models\Filme;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Sessoes;
+use Carbon\Carbon;
 
 class CarrinhoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+
+        $carrinho = $request->session()->get('carrinho', []);
+
+        /*
+        $sessoes_filme = [];
+        foreach ($carrinho as $filme) {
+            $listaSessoes = Sessoes::whereDate('data', '>=', Carbon::now('Europe/Lisbon'))
+                ->where('filme_id','=', $filme["id"])
+                ->get();
+            $sessoes_filme[$filme["id"]] = $listaSessoes;
+        }
+        */
+
+        $id_filmes_array = array_keys($carrinho);
+
+        $listaSessoes = Sessoes::whereDate('data', '>=', Carbon::now('Europe/Lisbon'))
+            ->whereIn('filme_id', $id_filmes_array)
+            ->get();
+
+
+
+        //$id_film_list = json_encode($id_filmes_array);
+
+        //dd($sessoes_filme);
+
+        //Recupera lista com os filme_id dos filmes com data hoje ou posterior
+        /*$listaSessoes = Sessoes::whereDate('data', '>=', Carbon::now('Europe/Lisbon'))
+            ->whereIn('filme_id', $id_film_list);
+
+        //Recupera as sessoes para um filme
+        $sessoes = Sessoes::where('filme_id', '=', $filme["id"])
+            ->whereDate('data', '>=', Carbon::now('Europe/Lisbon'))
+            ->get();
+        */
+
         return view('carrinho.index')
-        ->with('pageTitle', 'Carrinho de Compras')
-        ->with('carrinho', session('carrinho') ?? []);
+            ->with('pageTitle', 'Carrinho de Compras')
+            ->with('carrinho', session('carrinho') ?? [])
+            ->with('listaSessoes', $listaSessoes);
     }
 
+    public function store_filme(Request $request, Filme $filme)
+    {
+        $carrinho = $request->session()->get('carrinho', []);
+        $filme = Filme::find($request->filme_id);
+        $qtd = ($carrinho[$filme->id]['qtd'] ?? 0) + 1;
+
+        $carrinho[$filme->id] = [
+            'id' => $filme->id,
+            'qtd' => $qtd,
+            'titulo' => $filme->titulo,
+            'ano' => $filme->ano,
+            'genero' => $filme->genero_code
+        ];
+        $request->session()->put('carrinho', $carrinho);
+        return back()
+            ->with('alert-msg', 'Foi adicionado ao carrinho!')
+            ->with('alert-type', 'success');
+    }
+
+    public function update_filme(Request $request, Filme $filme)
+    {
+        $carrinho = $request->session()->get('carrinho', []);
+        $qtd = $carrinho[$filme->id]['qtd'] ?? 0;
+        $qtd += $request->quantidade;
+        if ($request->quantidade < 0) {
+            $msg = 'Removido ' . $request->quantidade . ' ao carrinho.';
+        } elseif ($request->quantidade > 0) {
+            $msg = 'Adicionado ' . $request->quantidade . ' ao carrinho.';
+        }
+        if ($qtd <= 0) {
+            unset($carrinho[$filme->id]);
+            $msg = 'Foram removidos todos os produtos do carrinho "' . $filme->titulo . '"';
+        } else {
+            $carrinho[$filme->id]['qtd'] = $qtd;
+        }
+        $request->session()->put('carrinho', $carrinho);
+
+        return back()
+            ->with('alert-msg', $msg)
+            ->with('alert-type', 'info');
+    }
+
+    public function destroy_filme(Request $request, Filme $filme)
+    {
+        $carrinho = $request->session()->get('carrinho', []);
+        if (array_key_exists($filme->id, $carrinho)) {
+            unset($carrinho[$filme->id]);
+            $request->session()->put('carrinho', $carrinho);
+            return back()
+                ->with('alert-msg', 'Filme removido.')
+                ->with('alert-type', 'success');
+        }
+        return back()
+            ->with('alert-msg', 'Erro')
+            ->with('alert-type', 'warning');
+    }
 
     /*public function store_filme(ProductPost $request)
     {
@@ -60,60 +154,4 @@ class CarrinhoController extends Controller
             }
         }
     }*/
-
-    public function store_filme(Request $request, Filme $filme){
-        $carrinho = $request->session()->get('carrinho', []);
-        $filme = Filme::find($request->filme_id);
-        $qtd = ($carrinho[$filme->id]['qtd'] ?? 0) + 1;
-
-        $carrinho[$filme->id] = [
-            'id' => $filme->id,
-            'qtd' => $qtd,
-            'titulo' => $filme->titulo,
-            'ano' => $filme->ano,
-            'genero' => $filme->genero_code
-        ];
-        $request->session()->put('carrinho', $carrinho);
-        return back()
-        ->with('alert-msg', 'Foi adicionado ao carrinho!')
-        ->with('alert-type', 'success');
-    }
-
-    public function update_filme(Request $request, Filme $filme){
-        $carrinho = $request->session()->get('carrinho', []);
-        $qtd = $carrinho[$filme->id]['qtd'] ?? 0;
-        $qtd += $request->quantidade;
-        if($request->quantidade < 0){
-            $msg = 'Removido ' . $request->quantidade . ' ao carrinho.';
-        }
-        elseif ($request->quantidade > 0){
-            $msg = 'Adicionado ' . $request->quantidade . ' ao carrinho.';
-        }
-        if($qtd <= 0){
-            unset($carrinho[$filme->id]);
-            $msg = 'Foram removidos todos os produtos do carrinho "' . $filme->titulo . '"';
-        }
-        else{
-            $carrinho[$filme->id]['qtd'] = $qtd;
-        }
-        $request->session()->put('carrinho', $carrinho);
-
-        return back()
-            ->with('alert-msg', $msg)
-            ->with('alert-type', 'info');
-    }
-
-    public function destroy_filme(Request $request, Filme $filme){
-        $carrinho = $request->session()->get('carrinho', []);
-        if(array_key_exists($filme->id, $carrinho)){
-            unset($carrinho[$filme->id]);
-            $request->session()->put('carrinho', $carrinho);
-            return back()
-                ->with('alert-msg', 'Filme removido.')
-                ->with('alert-type', 'success');
-        }
-        return back()
-            ->with('alert-msg', 'Erro')
-            ->with('alert-type', 'warning');
-    }
 }

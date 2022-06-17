@@ -85,7 +85,7 @@ class FilmeController extends Controller
         $sessoes = Sessoes::where('filme_id', '=', $filme["id"])
             ->whereDate('data', '>=', Carbon::now('Europe/Lisbon'))
             ->get();
-
+        //dd($sessoes);
 
         //Para iterar primeira dimensao do array
         $sessao_counter = 0;

@@ -19,6 +19,7 @@
 
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
+                    <th>Sessão</th>
                     <th>Titulo</th>
                     <th>Genero</th>
                     <th>Ano</th>
@@ -27,6 +28,21 @@
                 <tbody>
                     @foreach ($carrinho as $row)
                         <tr>
+                            <td>
+                                <!-- START  SESSOES -->
+                                <select class="form-select" aria-label="Default select example" id="sessionSel"
+                                    name="sessionSel">
+                                    <option disabled selected>Sessão:</option>
+                                    @foreach ($listaSessoes as $sessoes)
+                                        @if ($sessoes->filme_id == $row['id'])
+                                            <option value="{{ $sessoes->horario_inicio }}">
+                                                {{ $sessoes->data }} / {{ $sessoes->horario_inicio }}
+                                            </option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                                <!-- END    SESSOES -->
+                            </td>
                             <td>{{ $row['titulo'] }}</td>
                             <td>{{ $row['genero'] }}</td>
                             <td>{{ $row['ano'] }}</td>
