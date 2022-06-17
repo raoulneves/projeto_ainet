@@ -8,7 +8,7 @@
                     <a href="{{route('admin.filmes.create')}}" class="btn btn-success" role="button" aria-pressed="true">Novo Filme</a>
             </div>
         </div>
-        <div class="row justify-content-center">
+        <div class="row justify-content-center card shadow mb-4">
 
             <table class="table">
                 <thead>
@@ -48,8 +48,8 @@
                     @endforeach
                 </tbody>
             </table>
-            {{$filmes->links()}}
         </div>
+        {{$filmes->links()}}
     </div>
 
 @endsection

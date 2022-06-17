@@ -2,13 +2,15 @@
 @section('title', 'Utilizadores')
 @section('content')
 
+
     <div class="container">
-        <div class="row mb-3">
-            <div class="col-3">
-                <a href="#" class="btn btn-success" role="button" aria-pressed="true">Novo Utilizador</a>
-            </div>
+        <div class="row mb-3 col-3">
+            <a href="{{route('admin.users.create')}}" class="btn btn-success" role="button" aria-pressed="true">Novo Utilizador</a>
         </div>
-        <div class="row justify-content-center">
+
+
+
+        <div class="row justify-content-center card shadow mb-4">
             <table class="table">
                 <thead>
                     <tr>
@@ -40,21 +42,32 @@
                                 <a href="{{route('admin.users.edit', ['Users' => $user->id])}}" class="btn btn-primary btn-sm" role="button" aria-pressed="true">Alterar</a>
                         </td>
                         <td>
-
                                 <form action="{{route('admin.users.destroy',['Users'=> $user->id])}}" method="POST">
                                     @csrf
                                     @method("DELETE")
                                     <input type="submit" class="btn btn-danger btn-sm" value="Remove"/>
                                 </form>
-
                         </td>
-
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-            {{$users->links()}}
         </div>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <li class="page-item">
+                <a class="page-link" href="{{$users->previousPageUrl()}}" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                  <span class="sr-only">Previous</span>
+                </a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="{{$users->nextPageUrl()}}" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
     </div>
-
 @endsection

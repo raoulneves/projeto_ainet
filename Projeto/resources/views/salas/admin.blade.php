@@ -8,7 +8,7 @@
                 <a href="{{route('admin.salas.create')}}" class="btn btn-success" role="button" aria-pressed="true">Nova Sala</a>
         </div>
     </div>
-    <div class="row justify-content-center">
+    <div class="row justify-content-center card shadow mb-4">
         @if(session()->has('success'))
             <div class="alert alert-success">
                 {{ session()->get('success') }}
@@ -33,15 +33,13 @@
                             <form method="POST" action="{{route('admin.salas.delete', $sala->id)}}">
                                 @csrf
                                 @method('DELETE')
-                                <button onclick="return confirm('Tem a certeza')" class="btn btn-danger btn-sm">Delete</button>
+                                <button onclick="return confirm('Tem a certeza')" class="btn btn-danger btn-sm">Apagar</button>
                             </form>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
-        {{$salas->links()}}
     </div>
 </div>
-
 @endsection
