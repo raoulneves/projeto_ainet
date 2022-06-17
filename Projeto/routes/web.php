@@ -9,8 +9,7 @@ use App\Http\Controllers\SalaController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CarrinhoController;
 use App\Http\Middleware\VerifyIfIsAdmin;
-
-
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,16 +22,38 @@ use App\Http\Middleware\VerifyIfIsAdmin;
 |
 */
 
+//exibicao
 Route::get('/', [FilmeController::class, 'index'])->name('filme');
 Route::get('index_filter', [FilmeController::class, 'index_filter'])->name('index_filter');
 Route::get('/detalheFilme', [FilmeController::class, 'detalheFilme'])->name('detalhe_filme');
 Route::get('exibicao/detalhe/{filme}', [FilmeController::class, 'detalheFilme'])->name('exibicao.detalhe');
+
+
+//perfil
 Route::get('perfil', [UserController::class, 'perfil'])->name('perfil');
+Route::get('perfil/{perfil}/edit', [UserController::class, 'edit'])->name('perfil.edit');
+Route::put('perfil/{perfil}', [UserController::class, 'update'])->name('perfil.update');
+Route::get('alterarPassword', [UserController::class, 'alterarPassword'])->name('alterarPassword');
+Route::post('updatePassword', [UserController::class, 'updatePassword'])->name('updatePassword');
+
+
+//carrinho
 Route::get('carrinho', [CarrinhoController::class, 'index'])->name('carrinho.index');
 Route::put('carrinho/filmes/{filme}', [CarrinhoController::class, 'update_filme'])->name('carrinho.index_update');
 Route::delete('carrinho/filmes/{filme}', [CarrinhoController::class, 'destroy_filme'])->name('carrinho.index_des');
 Route::post('carrinho', [CarrinhoController::class, 'store_filme'])->name('carrinho.index_post');
+
+//pagamento
 Route::get('pagamento', [PagamentoController::class, 'index'])->name('pagamento.index');
+
+
+//cria pasta atalho storage
+Route::get('/linkstorage', function () {
+    Artisan::call('storage:link');
+});
+
+
+
 
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
 
@@ -58,6 +79,15 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::put('filmes/{filme}', [FilmeController::class, 'update'])->name('filmes.update');
     Route::delete('filmes/{filme}', [FilmeController::class, 'destroy'])->name('filmes.destroy');
     Route::delete('filmes/{filme}/foto', [FilmeController::class, 'destroy_foto'])->name('filmes.foto.destroy');
+
+
+    //Users
+    Route::get('/users', [UserController::class, 'admin_utilizadores'])->name('users');
+    Route::get('users/{Users}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::patch('users/{Users}', [UserController::class, 'update'])->name('users.update');
+    Route::get('users/create', [UserController::class, 'create'])->name('users.create');
+    Route::delete('users/{Users}', [UserController::class, 'destroy'])->name('users.destroy');
+
 
     });
 });

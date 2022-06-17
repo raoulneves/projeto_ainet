@@ -17,6 +17,8 @@
      <link rel="dns-prefetch" href="//fonts.gstatic.com">
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
      <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.min.js"></script>
+     <script type="text/javascript" src="asset('js/profile.js')"></script>
 
      <!-- Styles -->
      <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -64,12 +66,14 @@
                                  <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                      data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                      {{ Auth::user()->name }}
-                                     <img
-                                         src="{{ Auth::user()->url_foto ? asset('storage/fotos/' . Auth::user()->url_foto) : asset('img/default_img.png') }}">
+                                     <img class="img-profile rounded-circle" style="width: auto; height: 21px;" src="{{ Auth::user()->foto_url ? Storage::url('fotos/' . Auth::user()->foto_url) : asset('img/default_img.png') }}">
                                  </a>
 
                                  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('perfil') }}">Perfil</a>
+                                    @if(Auth::user()->tipo == 'C')
+                                        <a class="dropdown-item" href="{{ route('perfil') }}">Perfil</a>
+                                    @endif
+                                    <a class="dropdown-item" href="{{ route('alterarPassword') }}">Alterar a password</a>
 
                                     @if(Auth::user()->tipo != 'C')
                                         <a class="dropdown-item" href="{{ route('admin.dashboard') }}">Administrador</a>
@@ -85,9 +89,11 @@
                                      </form>
                                  </div>
                              </li>
+                             <div class="container d-flex align-items-center">
                              <li class="nav-item">
                                  <a class="nav-link fas fa-shopping-cart" href="{{ route('carrinho.index') }}"></a>
                              </li>
+                            </div>
                          @endguest
                      </ul>
                  </div>

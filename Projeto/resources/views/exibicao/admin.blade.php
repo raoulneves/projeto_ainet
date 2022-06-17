@@ -5,9 +5,7 @@
     <div class="container">
         <div class="row mb-3">
             <div class="col-3">
-                @can('create', App\Models\Filme::class)
                     <a href="{{route('admin.filmes.create')}}" class="btn btn-success" role="button" aria-pressed="true">Novo Filme</a>
-                @endcan
             </div>
         </div>
         <div class="row justify-content-center">

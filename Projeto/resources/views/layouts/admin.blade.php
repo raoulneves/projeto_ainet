@@ -37,7 +37,7 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-            <!-- Nav Item - Dashboard -->
+            <!-- Dashboard -->
             <li class="nav-item {{Route::currentRouteName()=='admin.dashboard'? 'active': ''}}">
                 <a class="nav-link" href="#">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -48,7 +48,7 @@
             <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <!-- Nav Item -->
+            <!-- Filmes -->
 
             <li class="nav-item {{Route::currentRouteName()=='admin.filmes'? 'active': ''}}">
                 <a class="nav-link" href="{{route('admin.filmes')}}">
@@ -57,22 +57,22 @@
             </li>
 
 
-            <!-- Nav Item -->
+            <!-- Salas -->
             <li class="nav-item {{Route::currentRouteName()=='admin.salas'? 'active': ''}}">
                 <a class="nav-link" href="{{ route('admin.salas') }}">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Salas</span></a>
                 </li>
 
-            <!-- Nav Item -->
-            @can('viewAny', App\Models\Docente::class)
-            <li class="nav-item {{Route::currentRouteName()=='admin.docentes'? 'active': ''}}">
-                <a class="nav-link" href="#">
+            <!-- Utilizadores -->
+            @if(Auth::user()->tipo == 'A')
+            <li class="nav-item {{Route::currentRouteName()=='admin.users'? 'active': ''}}">
+                <a class="nav-link" href="{{ route('admin.users') }}">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Docentes</span>
+                    <span>Utilizadores</span>
                 </a>
             </li>
-            @endcan
+            @endif
 
             <!-- Nav Item -->
             @can('viewAny', App\Models\Aluno::class)
