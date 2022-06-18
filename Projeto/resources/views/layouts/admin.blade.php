@@ -7,14 +7,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+     <!-- CSRF Token -->
+     <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>Dashboard</title>
 
     <!-- Custom fonts for this template-->
-    <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
+
+     <!-- Scripts -->
+     <script src="{{ asset('js/app.js') }}" defer></script>
+
+     <!-- Fonts -->
+     <link rel="dns-prefetch" href="//fonts.gstatic.com">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.min.js"></script>
+     <script type="text/javascript" src="asset('js/profile.js')"></script>
+
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
 </head>
 
@@ -38,8 +54,8 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Dashboard -->
-            <li class="nav-item {{Route::currentRouteName()=='admin.dashboard'? 'active': ''}}">
-                <a class="nav-link" href="#">
+            <li class="nav-item {{ Route::currentRouteName() == 'admin.dashboard' ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin.dashboard') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span>
                 </a>
@@ -50,59 +66,40 @@
 
             <!-- Filmes -->
 
-            <li class="nav-item {{Route::currentRouteName()=='admin.filmes'? 'active': ''}}">
-                <a class="nav-link" href="{{route('admin.filmes')}}">
+            <li class="nav-item {{ Route::currentRouteName() == 'admin.filmes' ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin.filmes') }}">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Filmes</span></a>
             </li>
 
 
             <!-- Salas -->
-            <li class="nav-item {{Route::currentRouteName()=='admin.salas'? 'active': ''}}">
+            <li class="nav-item {{ Route::currentRouteName() == 'admin.salas' ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('admin.salas') }}">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Salas</span></a>
-                </li>
+            </li>
 
             <!-- Utilizadores -->
-            @if(Auth::user()->tipo == 'A')
-            <li class="nav-item {{Route::currentRouteName()=='admin.users'? 'active': ''}}">
-                <a class="nav-link" href="{{ route('admin.users') }}">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Utilizadores</span>
-                </a>
-            </li>
+            @if (Auth::user()->tipo == 'A')
+                <li class="nav-item {{ Route::currentRouteName() == 'admin.users' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('admin.users') }}">
+                        <i class="fas fa-fw fa-table"></i>
+                        <span>Utilizadores</span>
+                    </a>
+                </li>
             @endif
-
-            <!-- Nav Item -->
-            @can('viewAny', App\Models\Aluno::class)
-            <li class="nav-item {{Route::currentRouteName()=='admin.alunos'? 'active': ''}}">
-                <a class="nav-link" href="{{route(' ')}}">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Alunos</span>
-                </a>
-            </li>
-            @endcan
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
             <!-- Nav Item -->
             <li class="nav-item">
-                <a class="nav-link" href="{{url('/')}}">
+                <a class="nav-link" href="{{ url('/') }}">
                     <i class="fas fa-fw fa-home"></i>
                     <span>Parte Publica</span>
                 </a>
             </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-
         </ul>
         <!-- End of Sidebar -->
 
@@ -114,24 +111,23 @@
 
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }}
+                                <img class="img-profile rounded-circle" style="width: auto; height: 21px;"
+                                    src="{{ Auth::user()->foto_url ? Storage::url('fotos/' . Auth::user()->foto_url) : asset('img/default_img.png') }}">
+                            </a>
 
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
-
-                    <ul class="navbar-nav ml-auto">
-                        @guest
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                        </li>
-                        @else
-
-
-                        @endguest
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+                            </div>
                     </ul>
-
-
                 </nav>
                 <!-- End of Topbar -->
 
@@ -185,7 +181,8 @@
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -197,7 +194,8 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary"  href="{{route('logout')}}" onclick="event.preventDefault();
+                    <a class="btn btn-primary" href="{{ route('logout') }}"
+                        onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">Logout</a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
@@ -208,14 +206,14 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
-    <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+    <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
+    <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
 
 
 </body>

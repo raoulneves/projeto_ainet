@@ -1,11 +1,15 @@
 @extends('layouts.admin')
-@section('title', 'Utilizadores')
 @section('content')
-
-
     <div class="container">
-        <div class="row mb-3 col-3">
-            <a href="{{route('admin.users.create')}}" class="btn btn-success" role="button" aria-pressed="true">Novo Utilizador</a>
+        <div class="row">
+            <div class="mb-3 col-3 col-sm">
+                <h2>Utilizadores</h2>
+            </div>
+            <div class="mb-3 col-3 col-sm-2">
+                <a href="{{ route('admin.users.create') }}" class="btn btn-success" role="button" aria-pressed="true">Novo
+                    Utilizador</a>
+
+            </div>
         </div>
 
 
@@ -39,15 +43,16 @@
                                 <td>Sim</td>
                             @endif
                             <td>
-                                <a href="{{route('admin.users.edit', ['Users' => $user->id])}}" class="btn btn-primary btn-sm" role="button" aria-pressed="true">Alterar</a>
-                        </td>
-                        <td>
-                                <form action="{{route('admin.users.destroy',['Users'=> $user->id])}}" method="POST">
+                                <a href="{{ route('admin.users.edit', ['Users' => $user->id]) }}"
+                                    class="btn btn-primary btn-sm" role="button" aria-pressed="true">Alterar</a>
+                            </td>
+                            <td>
+                                <form action="{{ route('admin.users.destroy', ['Users' => $user->id]) }}" method="POST">
                                     @csrf
-                                    @method("DELETE")
-                                    <input type="submit" class="btn btn-danger btn-sm" value="Remove"/>
+                                    @method('DELETE')
+                                    <input type="submit" class="btn btn-danger btn-sm" value="Remove" />
                                 </form>
-                        </td>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>

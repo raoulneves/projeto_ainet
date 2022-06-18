@@ -1,13 +1,16 @@
 @extends('layouts.admin')
-@section('title', 'Salas de Cinema')
 @section('content')
 
 <div class="container">
-    <div class="row mb-3">
-        <div class="col-3">
-                <a href="{{route('admin.salas.create')}}" class="btn btn-success" role="button" aria-pressed="true">Nova Sala</a>
+    <div class="row">
+        <div class="mb-3 col-3 col-sm">
+            <h2>Salas de Cinema</h2>
+        </div>
+        <div class="mb-3 col-3 col-sm-2">
+            <a href="{{route('admin.salas.create')}}" class="btn btn-success" role="button" aria-pressed="true">Nova Sala</a>
         </div>
     </div>
+
     <div class="row justify-content-center card shadow mb-4">
         @if(session()->has('success'))
             <div class="alert alert-success">
