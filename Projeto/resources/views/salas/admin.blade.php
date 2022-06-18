@@ -30,7 +30,7 @@
                             <a href="{{route('admin.salas.edit', ['sala' => $sala])}}" class="btn btn-primary btn-sm" role="button" aria-pressed="true">Alterar</a>
                         </td>
                         <td>
-                            <form method="POST" action="{{route('admin.salas.delete', $sala->id)}}">
+                            <form method="POST" action="{{route('admin.salas.destroy', $sala->id)}}">
                                 @csrf
                                 @method('DELETE')
                                 <button onclick="return confirm('Tem a certeza')" class="btn btn-danger btn-sm">Apagar</button>

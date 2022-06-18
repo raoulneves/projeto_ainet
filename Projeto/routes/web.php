@@ -33,8 +33,10 @@ Route::get('exibicao/detalhe/{filme}', [FilmeController::class, 'detalheFilme'])
 Route::get('perfil', [UserController::class, 'perfil'])->name('perfil');
 Route::get('perfil/{perfil}/edit', [UserController::class, 'edit'])->name('perfil.edit');
 Route::put('perfil/{perfil}', [UserController::class, 'update'])->name('perfil.update');
-Route::get('alterarPassword', [UserController::class, 'alterarPassword'])->name('alterarPassword');
-Route::post('updatePassword', [UserController::class, 'updatePassword'])->name('updatePassword');
+
+//perfil-Passwords
+Route::get('/alterarPassword', [App\Http\Controllers\HomeController::class, 'alterarPassword'])->name('alterarPassword');
+Route::post('/alterarPassword', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
 
 
 //carrinho
@@ -55,6 +57,7 @@ Route::get('/linkstorage', function () {
 
 
 
+
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
 
     Route::middleware([VerifyIfIsAdmin::class])->group(function () {
@@ -67,7 +70,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::get('salas/{sala}/edit', [SalaController::class, 'edit'])->name('salas.edit');
     Route::get('salas/create', [SalaController::class, 'create'])->name('salas.create');
     Route::post('salas', [SalaController::class, 'store'])->name('salas.store');
-    Route::delete('salas/{id}', [SalaController::class, 'delete'])->name('salas.delete');
+    Route::delete('salas/{id}', [SalaController::class, 'destroy'])->name('salas.destroy');
     Route::put('salas/{sala}', [SalaController::class, 'update'])->name('salas.update');
 
 
@@ -86,6 +89,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::get('users/{Users}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::patch('users/{Users}', [UserController::class, 'update'])->name('users.update');
     Route::get('users/create', [UserController::class, 'create'])->name('users.create');
+    Route::post('users', [UserController::class, 'store'])->name('users.store');
     Route::delete('users/{Users}', [UserController::class, 'destroy'])->name('users.destroy');
 
 

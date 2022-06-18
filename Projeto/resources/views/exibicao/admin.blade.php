@@ -36,7 +36,7 @@
                         </td>
                         <td>
 
-                                <form action="{{route('admin.filmes.destroy', ['filme' => $filme])}}" method="POST">
+                                <form action="{{route('admin.filmes.destroy', ['filme' => $filme->id])}}" method="POST">
                                     @csrf
                                     @method("DELETE")
                                     <input type="submit" class="btn btn-danger btn-sm" value="Apagar">

@@ -14,11 +14,6 @@ class SalaController extends Controller
         return view('salas.admin')->withSalas($salas);
     }
 
-    public function delete(Sala $sala){
-        $sala->delete();
-        return back();
-    }
-
     public function edit(Sala $sala)
     {
         //$listaSalas = Sala::pluck('nome');
@@ -51,8 +46,9 @@ class SalaController extends Controller
             ->with('alert-type', 'success');
     }
 
-    public function destroy(Sala $sala)
+    public function destroy($id)
     {
+        $sala = Sala::findOrFail($id);
         $oldName = $sala->nome;
         $oldSalaID = $sala->id;
         try {
