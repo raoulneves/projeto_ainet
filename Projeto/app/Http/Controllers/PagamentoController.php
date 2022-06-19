@@ -14,10 +14,13 @@ use Carbon\Carbon;
 
 class PagamentoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('pagamento.index');
-        //->with('pageTitle', 'Pagamento')
-        //->with('carrinho', session('carrinho') ?? []);
+        $carrinho = $request->session()->get('carrinho', []);
+        $sessao = $request->sessionSel;
+
+        return view('pagamento.index')
+            ->with('carrinho',$carrinho)
+            ->with('session', $sessao);
     }
 }

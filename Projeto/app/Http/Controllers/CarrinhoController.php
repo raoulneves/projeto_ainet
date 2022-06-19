@@ -18,16 +18,6 @@ class CarrinhoController extends Controller
 
         $carrinho = $request->session()->get('carrinho', []);
 
-        /*
-        $sessoes_filme = [];
-        foreach ($carrinho as $filme) {
-            $listaSessoes = Sessoes::whereDate('data', '>=', Carbon::now('Europe/Lisbon'))
-                ->where('filme_id','=', $filme["id"])
-                ->get();
-            $sessoes_filme[$filme["id"]] = $listaSessoes;
-        }
-        */
-
         $id_filmes_array = array_keys($carrinho);
 
         $listaSessoes = Sessoes::whereDate('data', '>=', Carbon::now('Europe/Lisbon'))
@@ -35,16 +25,21 @@ class CarrinhoController extends Controller
             ->get();
 
 
+        /* CENAS QUE PODEM SER UTEIS
 
-        //$id_film_list = json_encode($id_filmes_array);
-
-        //dd($sessoes_filme);
-
-        //Recupera lista com os filme_id dos filmes com data hoje ou posterior
-        /*$listaSessoes = Sessoes::whereDate('data', '>=', Carbon::now('Europe/Lisbon'))
+        $id_film_list = json_encode($id_filmes_array);
+        dd($sessoes_filme);
+        $sessoes_filme = [];
+        foreach ($carrinho as $filme) {
+            $listaSessoes = Sessoes::whereDate('data', '>=', Carbon::now('Europe/Lisbon'))
+                ->where('filme_id','=', $filme["id"])
+                ->get();
+            $sessoes_filme[$filme["id"]] = $listaSessoes;
+        }
+        Recupera lista com os filme_id dos filmes com data hoje ou posterior
+        $listaSessoes = Sessoes::whereDate('data', '>=', Carbon::now('Europe/Lisbon'))
             ->whereIn('filme_id', $id_film_list);
-
-        //Recupera as sessoes para um filme
+        Recupera as sessoes para um filme
         $sessoes = Sessoes::where('filme_id', '=', $filme["id"])
             ->whereDate('data', '>=', Carbon::now('Europe/Lisbon'))
             ->get();
@@ -67,7 +62,8 @@ class CarrinhoController extends Controller
             'qtd' => $qtd,
             'titulo' => $filme->titulo,
             'ano' => $filme->ano,
-            'genero' => $filme->genero_code
+            'genero' => $filme->genero_code,
+            'sessao' => 0
         ];
         $request->session()->put('carrinho', $carrinho);
         return back()
@@ -112,6 +108,23 @@ class CarrinhoController extends Controller
             ->with('alert-msg', 'Erro')
             ->with('alert-type', 'warning');
     }
+
+    public function update_sessao(Request $request, Filme $filme)
+    {
+        $carrinho = $request->session()->get('carrinho', []);
+
+        $session = $carrinho[$filme->id]['sessao'] ?? 0;
+        $session = $request->sessionSel;
+
+        $carrinho[$filme->id]['sessao'] = $session;
+
+        $request->session()->put('carrinho', $carrinho);
+
+        return back()
+            ->with('alert-msg', 'Sessão selecionada!')
+            ->with('alert-type', 'info');
+    }
+
 
     /*public function store_filme(ProductPost $request)
     {

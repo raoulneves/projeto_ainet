@@ -51,10 +51,29 @@
     <div class="container rounded bg-white mt-5 mb-5">
         <div class="row">
             <div class="col-md-3 border-right">
-                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5"
-                        width="150px" src=""><span
-                        class="font-weight-bold"></span><span
-                        class="text-black-50"></span><span> </span></div>
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                    <!-- Lista carrinho -->
+                    <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <th>Sessão</th>
+                            <th>Titulo</th>
+                            <th>Quantidade</th>
+                        </thead>
+                        <tbody>
+                            @foreach ($carrinho as $row)
+                                <tr>
+                                    <td>
+                                        {{ $row['sessao'] }}
+                                    </td>
+                                    <td>{{ $row['titulo'] }}</td>
+                                    <td>
+                                        {{ $row['qtd'] }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="col-md-4 border-right">
                 <div class="p-3 py-5">

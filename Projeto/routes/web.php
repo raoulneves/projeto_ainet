@@ -30,6 +30,7 @@ Route::get('/detalheFilme', [FilmeController::class, 'detalheFilme'])->name('det
 Route::get('exibicao/detalhe/{filme}', [FilmeController::class, 'detalheFilme'])->name('exibicao.detalhe');
 Route::get('perfil', [UserController::class, 'perfil'])->name('perfil');
 Route::get('carrinho', [CarrinhoController::class, 'index'])->name('carrinho.index');
+Route::post('carrinho/filmes/{filme}', [CarrinhoController::class, 'update_sessao'])->name('carrinho.sessao_update');
 Route::put('carrinho/filmes/{filme}', [CarrinhoController::class, 'update_filme'])->name('carrinho.index_update');
 Route::delete('carrinho/filmes/{filme}', [CarrinhoController::class, 'destroy_filme'])->name('carrinho.index_des');
 Route::post('carrinho', [CarrinhoController::class, 'store_filme'])->name('carrinho.index_post');
