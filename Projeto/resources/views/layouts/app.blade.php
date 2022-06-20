@@ -20,7 +20,6 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
 </head>
 
 <body>
@@ -30,79 +29,68 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'CineMagic') }}
                 </a>
-                <!--
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="">
+                    aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                -->
-                <!--div class="collapse navbar-collapse" id="navbarSupportedContent"-->
 
-                <!-- Left Side Of Navbar -->
-                <ul class="navbar-nav me-auto">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="navbar-nav me-auto">
 
-                </ul>
+                    </ul>
 
-                <!-- Right Side Of Navbar -->
-                <ul class="navbar-nav ms-auto">
-
-                    <!-- Authentication Links -->
-                    @guest
-                        @if (Route::has('login'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                        @endif
-
-                        @if (Route::has('register'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                            </li>
-                        @endif
-                        <li class="nav-item">
-                            <a class="nav-link fas fa-shopping-cart" href="{{ route('carrinho.index') }}"></a>
-                        </li>
-                    @else
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }}
-                                <img class="rounded-circle img-fluid" style="width: auto; height: 20px;"
-                                    src="{{ Auth::user()->foto_url ? asset('storage/fotos/' . Auth::user()->foto_url) : asset('img/default_img.png') }}">
-                            </a>
-
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <!-- PERFIL -->
-                                <li><a class="dropdown-item" href="{{ route('perfil') }}">
-                                        {{ __('Perfil') }}
-                                    </a>
+                    <!-- Right Side Of Navbar -->
+                    <ul class="navbar-nav ms-auto">
+                        <!-- Authentication Links -->
+                        @guest
+                            @if (Route::has('login'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
+                            @endif
 
-                                <!-- LOGOUT -->
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
+                            @if (Route::has('register'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                    class="d-none">
-                                    @csrf
-                                </form>
-                            </ul>
-                        </li>
-
-                        <div class="container d-flex align-items-center">
+                            @endif
                             <li class="nav-item">
                                 <a class="nav-link fas fa-shopping-cart" href="{{ route('carrinho.index') }}"></a>
                             </li>
-                        </div>
+                        @else
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->name }}
+                                    <img class="rounded-circle img-fluid" style="width: auto; height: 20px;"
+                                    src="{{ Auth::user()->foto_url ? asset('storage/fotos/' . Auth::user()->foto_url) : asset('img/default_img.png') }}">
+                                </a>
 
-                    @endguest
-                </ul>
-                <!--/div-->
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                   <a class="dropdown-item" href="{{ route('perfil') }}">Perfil</a>
+
+                                   @if(Auth::user()->tipo != 'C')
+                                       <a class="dropdown-item" href="{{ route('admin.dashboard') }}">Administrador</a>
+                                   @endif
+                                   <br>
+                                   <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                       document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                        class="d-none">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link fas fa-shopping-cart" href="{{ route('carrinho.index') }}"></a>
+                            </li>
+                        @endguest
+                    </ul>
+                </div>
             </div>
         </nav>
 

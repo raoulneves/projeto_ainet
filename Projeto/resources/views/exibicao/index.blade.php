@@ -39,7 +39,7 @@
         <div class="container px-4 px-lg-5 my-5">
             <div class="text-center text-white">
                 <a href="{{ route('filme') }}" id="img">
-                    <img src="{{ asset('img/cinema.png') }}">
+                    <img src="{{ Storage::url('header/cinema.png') }}">
                     <h1 class="display-4 fw-bolder">Filmes em Exibição</h1>
                 </a>
             </div>
