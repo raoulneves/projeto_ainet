@@ -1,14 +1,17 @@
 @extends('layouts.admin')
-@section('title', 'Salas de Cinema')
 @section('content')
 
 <div class="container">
-    <div class="row mb-3">
-        <div class="col-3">
-                <a href="{{route('admin.salas.create')}}" class="btn btn-success" role="button" aria-pressed="true">Nova Sala</a>
+    <div class="row">
+        <div class="mb-3 col-3 col-sm">
+            <h2>Salas de Cinema</h2>
+        </div>
+        <div class="mb-3 col-3 col-sm-2">
+            <a href="{{route('admin.salas.create')}}" class="btn btn-success" role="button" aria-pressed="true">Nova Sala</a>
         </div>
     </div>
-    <div class="row justify-content-center">
+
+    <div class="row justify-content-center card shadow mb-4">
         @if(session()->has('success'))
             <div class="alert alert-success">
                 {{ session()->get('success') }}
@@ -30,18 +33,16 @@
                             <a href="{{route('admin.salas.edit', ['sala' => $sala])}}" class="btn btn-primary btn-sm" role="button" aria-pressed="true">Alterar</a>
                         </td>
                         <td>
-                            <form method="POST" action="{{route('admin.salas.delete', $sala->id)}}">
+                            <form method="POST" action="{{route('admin.salas.destroy', $sala->id)}}">
                                 @csrf
                                 @method('DELETE')
-                                <button onclick="return confirm('Tem a certeza')" class="btn btn-danger btn-sm">Delete</button>
+                                <button onclick="return confirm('Tem a certeza')" class="btn btn-danger btn-sm">Apagar</button>
                             </form>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
-        {{$salas->links()}}
     </div>
 </div>
-
 @endsection

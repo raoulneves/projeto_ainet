@@ -13,9 +13,6 @@ class Clientes extends Model
         'id',
         'nif',
         'tipo_pagamento',
-        'ref_pagamento',
-        'deleted_at',
-        'created_at',
-        'updated_at'
+        'ref_pagamento'
     ];
 }

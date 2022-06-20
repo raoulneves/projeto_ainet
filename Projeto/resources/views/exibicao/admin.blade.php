@@ -1,16 +1,17 @@
 @extends('layouts.admin')
-@section('title', 'Filmes')
 @section('content')
 
     <div class="container">
-        <div class="row mb-3">
-            <div class="col-3">
-                <a href="{{ route('admin.filmes.create') }}" class="btn btn-success" role="button" aria-pressed="true">Novo
-                    Filme</a>
+        <div class="row">
+            <div class="mb-3 col-3 col-sm">
+                <h2>Filmes</h2>
+            </div>
+            <div class="mb-3 col-3 col-sm-2">
+                <a href="{{route('admin.filmes.create')}}" class="btn btn-success" role="button" aria-pressed="true">Novo Filme</a>
             </div>
         </div>
-        <div class="row justify-content-center">
 
+        <div class="row justify-content-center card shadow mb-4">
             <table class="table">
                 <thead>
                     <tr>
@@ -38,7 +39,7 @@
                             </td>
                             <td>
 
-                                <form action="{{ route('admin.filmes.destroy', ['filme' => $filme]) }}" method="POST">
+                                <form action="{{route('admin.filmes.destroy', ['filme' => $filme->id])}}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <input type="submit" class="btn btn-danger btn-sm" value="Apagar">
@@ -50,8 +51,8 @@
                     @endforeach
                 </tbody>
             </table>
-            {{ $filmes->links() }}
         </div>
+        {{$filmes->links()}}
     </div>
 
 @endsection

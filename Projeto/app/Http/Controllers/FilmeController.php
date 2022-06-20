@@ -146,7 +146,7 @@ class FilmeController extends Controller
     {
         $genero = Generos::pluck('nome');
         $filme = new Filme;
-        return view('alunos.create')
+        return view('exibicao.create')
             ->with('filme', $filme)
             ->with('genero', $genero);
     }
@@ -159,7 +159,7 @@ class FilmeController extends Controller
             ->with('alert-type', 'success');
     }
 
-    public function destroy(Filme $filme)
+    /*public function destroy(Filme $filme)
     {
         $oldName = $filme->titulo;
         $oldFilmeID = $filme->id;
@@ -186,5 +186,11 @@ class FilmeController extends Controller
                     ->with('alert-type', 'danger');
             }
         }
+    }*/
+
+    public function destroy($id){
+        $filme = Filme::findOrFail($id);
+        $filme->delete();
+        return redirect()->back()->with('alert-msg', 'Filme ' . $filme->titulo .' foi apagado com sucesso')->with('alert-type', 'success');
     }
 }

@@ -13,10 +13,12 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+     <!-- Fonts -->
+     <link rel="dns-prefetch" href="//fonts.gstatic.com">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.min.js"></script>
+     <script type="text/javascript" src="asset('js/profile.js')"></script>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -44,33 +46,52 @@
 
                 </ul>
 
-                <!-- Right Side Of Navbar -->
-                <ul class="navbar-nav ms-auto">
+                             @if (Route::has('register'))
+                                 <li class="nav-item">
+                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                 </li>
+                             @endif
+                             <li class="nav-item">
+                                 <a class="nav-link fas fa-shopping-cart" href="{{ route('carrinho.index') }}"></a>
+                             </li>
+                         @else
+                             <li class="nav-item dropdown">
+                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                     {{ Auth::user()->name }}
+                                     <img class="img-profile rounded-circle" style="width: auto; height: 21px;" src="{{ Auth::user()->foto_url ? Storage::url('fotos/' . Auth::user()->foto_url) : asset('img/default_img.png') }}">
+                                 </a>
 
-                    <!-- Authentication Links -->
-                    @guest
-                        @if (Route::has('login'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                        @endif
+                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    @if(Auth::user()->tipo == 'C')
+                                        <a class="dropdown-item" href="{{ route('perfil') }}">Perfil</a>
+                                    @endif
+                                    <a class="dropdown-item" href="{{ route('alterarPassword') }}">Alterar a password</a>
 
-                        @if (Route::has('register'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                            </li>
-                        @endif
-                        <li class="nav-item">
-                            <a class="nav-link fas fa-shopping-cart" href="{{ route('carrinho.index') }}"></a>
-                        </li>
-                    @else
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }}
-                                <img class="rounded-circle img-fluid" style="width: auto; height: 20px;"
-                                    src="{{ Auth::user()->foto_url ? asset('storage/fotos/' . Auth::user()->foto_url) : asset('img/default_img.png') }}">
-                            </a>
+                                    @if(Auth::user()->tipo != 'C')
+                                        <a class="dropdown-item" href="{{ route('admin.dashboard') }}">Administrador</a>
+                                    @endif
+                                    <br>
+                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">
+                                         {{ __('Logout') }}
+                                     </a>
+                                     <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                         class="d-none">
+                                         @csrf
+                                     </form>
+                                 </div>
+                             </li>
+                             <div class="container d-flex align-items-center">
+                             <li class="nav-item">
+                                 <a class="nav-link fas fa-shopping-cart" href="{{ route('carrinho.index') }}"></a>
+                             </li>
+                            </div>
+                         @endguest
+                     </ul>
+                 </div>
+             </div>
+         </nav>
 
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <!-- PERFIL -->
