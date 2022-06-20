@@ -33,11 +33,12 @@
                                     <div class="row">
                                         <!-- START  SESSOES -->
                                         <form class="needs-validation"
-                                            action="{{ route('carrinho.sessao_update', $row['id']) }}" method="POST">
+                                            action="{{ route('carrinho.sessao_update', $row['id']) }}" method="POST"
+                                            id="sessForm">
                                             @csrf
                                             <select class="form-select" id="sessionSel" name="sessionSel"
-                                                onchange="this.form.submit();"required>
-                                                <option selected disabled value="">Escolher uma sessão: </option>
+                                                onchange="this.form.submit();" required>
+                                                <!--option selected disabled value="">Escolher uma sessão: </option -->
                                                 @foreach ($listaSessoes as $sessoes)
                                                     @if ($sessoes->filme_id == $row['id'])
                                                         <option value="{{ $sessoes->id }}"
@@ -48,9 +49,8 @@
                                                 @endforeach
                                             </select>
                                         </form>
-
+                                        <!-- END    SESSOES -->
                                     </div>
-                                    <!-- END    SESSOES -->
                                 </td>
                                 <td>{{ $row['titulo'] }}</td>
                                 <td>{{ $row['genero'] }}</td>
@@ -79,7 +79,6 @@
                                             </form>
                                         </div>
                                     </div>
-
                                 </td>
                                 <td>
                                     <form action="{{ route('carrinho.index_des', $row['id']) }}" method="POST">
@@ -97,17 +96,24 @@
 
                 <!-- Verificaocao se login esta feito -->
                 @guest
+                    <!-- Sem login -->
                     <div style="position: relative;text-align: right;">
                         <input type="submit" class="btn btn-success" value="Efetuar Pagamento" disabled>
                     </div>
                 @else
-                    <a class="nav-link" href="{{ route('pagamento.index') }}">
+                    <!-- Verifica se carrinho tem algum filme -->
+                    @if (!empty($carrinho))
+                        <a class="nav-link" href="{{ route('pagamento.index') }}">
+                            <div style="position: relative;text-align: right;">
+                                <input type="submit" class="btn btn-success" value="Efetuar Pagamento">
+                            </div>
+                        </a>
+                    @else
                         <div style="position: relative;text-align: right;">
-                            <input type="submit" class="btn btn-success" value="Efetuar Pagamento">
+                            <input type="submit" class="btn btn-success" value="Efetuar Pagamento" disabled>
                         </div>
-                    </a>
+                    @endif
                 @endguest
-
 
             </div>
         </div>

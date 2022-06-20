@@ -60,7 +60,7 @@ class FilmeController extends Controller
         $filmes = Filme::where('titulo', 'LIKE', '%' . $key . '%')
             ->orwhere('sumario', 'LIKE', '%' . $key . '%')
             ->paginate(15);
-
+ 
         return view('exibicao.index')
             ->with('filmes', $filmes)
             ->with('genres', $genres);

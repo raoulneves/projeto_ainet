@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Support\Facades\Auth;
@@ -35,32 +36,33 @@ Route::put('carrinho/filmes/{filme}', [CarrinhoController::class, 'update_filme'
 Route::delete('carrinho/filmes/{filme}', [CarrinhoController::class, 'destroy_filme'])->name('carrinho.index_des');
 Route::post('carrinho', [CarrinhoController::class, 'store_filme'])->name('carrinho.index_post');
 Route::get('pagamento', [PagamentoController::class, 'index'])->name('pagamento.index');
+Route::post('pagamento_option', [PagamentoController::class, 'pagamento_option'])->name('pagamento_option');
+
 
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
 
     Route::middleware([VerifyIfIsAdmin::class])->group(function () {
-    //dashboard
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+        //dashboard
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
 
-    //salas
-    Route::get('/salas', [SalaController::class, 'admin_index'])->name('salas');
-    Route::get('salas/{sala}/edit', [SalaController::class, 'edit'])->name('salas.edit');
-    Route::get('salas/create', [SalaController::class, 'create'])->name('salas.create');
-    Route::post('salas', [SalaController::class, 'store'])->name('salas.store');
-    Route::delete('salas/{id}', [SalaController::class, 'delete'])->name('salas.delete');
-    Route::put('salas/{sala}', [SalaController::class, 'update'])->name('salas.update');
+        //salas
+        Route::get('/salas', [SalaController::class, 'admin_index'])->name('salas');
+        Route::get('salas/{sala}/edit', [SalaController::class, 'edit'])->name('salas.edit');
+        Route::get('salas/create', [SalaController::class, 'create'])->name('salas.create');
+        Route::post('salas', [SalaController::class, 'store'])->name('salas.store');
+        Route::delete('salas/{id}', [SalaController::class, 'delete'])->name('salas.delete');
+        Route::put('salas/{sala}', [SalaController::class, 'update'])->name('salas.update');
 
 
-    //filmes
-    Route::get('filmes', [FilmeController::class, 'admin_index'])->name('filmes');
-    Route::get('filmes/{filme}/edit', [FilmeController::class, 'edit'])->name('filmes.edit');
-    Route::get('filmes/create', [FilmeController::class, 'create'])->name('filmes.create');
-    Route::post('filmes', [FilmeController::class, 'store'])->name('filmes.store');
-    Route::put('filmes/{filme}', [FilmeController::class, 'update'])->name('filmes.update');
-    Route::delete('filmes/{filme}', [FilmeController::class, 'destroy'])->name('filmes.destroy');
-    Route::delete('filmes/{filme}/foto', [FilmeController::class, 'destroy_foto'])->name('filmes.foto.destroy');
-
+        //filmes
+        Route::get('filmes', [FilmeController::class, 'admin_index'])->name('filmes');
+        Route::get('filmes/{filme}/edit', [FilmeController::class, 'edit'])->name('filmes.edit');
+        Route::get('filmes/create', [FilmeController::class, 'create'])->name('filmes.create');
+        Route::post('filmes', [FilmeController::class, 'store'])->name('filmes.store');
+        Route::put('filmes/{filme}', [FilmeController::class, 'update'])->name('filmes.update');
+        Route::delete('filmes/{filme}', [FilmeController::class, 'destroy'])->name('filmes.destroy');
+        Route::delete('filmes/{filme}/foto', [FilmeController::class, 'destroy_foto'])->name('filmes.foto.destroy');
     });
 });
 

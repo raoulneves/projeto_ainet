@@ -63,7 +63,7 @@ class CarrinhoController extends Controller
             'titulo' => $filme->titulo,
             'ano' => $filme->ano,
             'genero' => $filme->genero_code,
-            'sessao' => 0
+            'sessao' => ''
         ];
         $request->session()->put('carrinho', $carrinho);
         return back()
