@@ -1,103 +1,115 @@
- <!doctype html>
- <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
- <head>
-     <meta charset="utf-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-     <!-- CSRF Token -->
-     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-     <title>{{ config('app.name', 'CineMagic') }}</title>
+    <title>{{ config('app.name', 'CineMagic') }}</title>
 
-     <!-- Scripts -->
-     <script src="{{ asset('js/app.js') }}" defer></script>
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
 
-     <!-- Fonts -->
-     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 
-     <!-- Styles -->
-     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
- </head>
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
- <body>
-     <div id="app">
-         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-             <div class="container">
-                 <a class="navbar-brand" href="{{ url('/') }}">
-                     {{ config('app.name', 'CineMagic') }}
-                 </a>
-                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                     aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                     <span class="navbar-toggler-icon"></span>
-                 </button>
+</head>
 
-                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                     <!-- Left Side Of Navbar -->
-                     <ul class="navbar-nav me-auto">
+<body>
+    <div id="app">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    {{ config('app.name', 'CineMagic') }}
+                </a>
+                <!--
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                -->
+                <!--div class="collapse navbar-collapse" id="navbarSupportedContent"-->
 
-                     </ul>
+                <!-- Left Side Of Navbar -->
+                <ul class="navbar-nav me-auto">
 
-                     <!-- Right Side Of Navbar -->
-                     <ul class="navbar-nav ms-auto">
-                         <!-- Authentication Links -->
-                         @guest
-                             @if (Route::has('login'))
-                                 <li class="nav-item">
-                                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                 </li>
-                             @endif
+                </ul>
 
-                             @if (Route::has('register'))
-                                 <li class="nav-item">
-                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                 </li>
-                             @endif
-                             <li class="nav-item">
-                                 <a class="nav-link fas fa-shopping-cart" href="{{ route('carrinho.index') }}"></a>
-                             </li>
-                         @else
-                             <li class="nav-item dropdown">
-                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                     {{ Auth::user()->name }}
-                                     <img
-                                         src="{{ Auth::user()->url_foto ? asset('storage/fotos/' . Auth::user()->url_foto) : asset('img/default_img.png') }}">
-                                 </a>
+                <!-- Right Side Of Navbar -->
+                <ul class="navbar-nav ms-auto">
 
-                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('perfil') }}">Perfil</a>
+                    <!-- Authentication Links -->
+                    @guest
+                        @if (Route::has('login'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            </li>
+                        @endif
 
-                                    @if(Auth::user()->tipo != 'C')
-                                        <a class="dropdown-item" href="{{ route('admin.dashboard') }}">Administrador</a>
-                                    @endif
-                                    <br>
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                        document.getElementById('logout-form').submit();">
-                                         {{ __('Logout') }}
-                                     </a>
-                                     <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                         class="d-none">
-                                         @csrf
-                                     </form>
-                                 </div>
-                             </li>
-                             <li class="nav-item">
-                                 <a class="nav-link fas fa-shopping-cart" href="{{ route('carrinho.index') }}"></a>
-                             </li>
-                         @endguest
-                     </ul>
-                 </div>
-             </div>
-         </nav>
+                        @if (Route::has('register'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            </li>
+                        @endif
+                        <li class="nav-item">
+                            <a class="nav-link fas fa-shopping-cart" href="{{ route('carrinho.index') }}"></a>
+                        </li>
+                    @else
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }}
+                                <img class="rounded-circle img-fluid" style="width: auto; height: 20px;"
+                                    src="{{ Auth::user()->foto_url ? asset('storage/fotos/' . Auth::user()->foto_url) : asset('img/default_img.png') }}">
+                            </a>
 
-         <main class="py-4">
-             @yield('content')
-         </main>
-     </div>
- </body>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <!-- PERFIL -->
+                                <li><a class="dropdown-item" href="{{ route('perfil') }}">
+                                        {{ __('Perfil') }}
+                                    </a>
+                                </li>
 
- </html>
+                                <!-- LOGOUT -->
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+                                </li>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                    class="d-none">
+                                    @csrf
+                                </form>
+                            </ul>
+                        </li>
+
+                        <div class="container d-flex align-items-center">
+                            <li class="nav-item">
+                                <a class="nav-link fas fa-shopping-cart" href="{{ route('carrinho.index') }}"></a>
+                            </li>
+                        </div>
+
+                    @endguest
+                </ul>
+                <!--/div-->
+            </div>
+        </nav>
+
+        <main class="py-4">
+            @yield('content')
+        </main>
+    </div>
+</body>
+
+</html>

@@ -60,7 +60,7 @@ class FilmeController extends Controller
         $filmes = Filme::where('titulo', 'LIKE', '%' . $key . '%')
             ->orwhere('sumario', 'LIKE', '%' . $key . '%')
             ->paginate(15);
-
+ 
         return view('exibicao.index')
             ->with('filmes', $filmes)
             ->with('genres', $genres);
@@ -85,7 +85,7 @@ class FilmeController extends Controller
         $sessoes = Sessoes::where('filme_id', '=', $filme["id"])
             ->whereDate('data', '>=', Carbon::now('Europe/Lisbon'))
             ->get();
-
+        //dd($sessoes);
 
         //Para iterar primeira dimensao do array
         $sessao_counter = 0;
@@ -120,7 +120,7 @@ class FilmeController extends Controller
 
     public function edit(Filme $filme)
     {
-        return view('exibicao.edit')->withFilme($filme);
+        return view('exibicao.edit')->with('filme', $filme);
     }
 
     public function update(FilmePost $request, Filme $filme)

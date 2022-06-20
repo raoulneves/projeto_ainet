@@ -5,9 +5,8 @@
     <div class="container">
         <div class="row mb-3">
             <div class="col-3">
-                @can('create', App\Models\Filme::class)
-                    <a href="{{route('admin.filmes.create')}}" class="btn btn-success" role="button" aria-pressed="true">Novo Filme</a>
-                @endcan
+                <a href="{{ route('admin.filmes.create') }}" class="btn btn-success" role="button" aria-pressed="true">Novo
+                    Filme</a>
             </div>
         </div>
         <div class="row justify-content-center">
@@ -34,23 +33,24 @@
                             <td>{{ $filme->genero_code }}</td>
                             <td>{{ $filme->ano }}</td>
                             <td>
-                                <a href="{{route('admin.filmes.edit', ['filme' => $filme])}}" class="btn btn-primary btn-sm" role="button" aria-pressed="true">Alterar</a>
-                        </td>
-                        <td>
+                                <a href="{{ route('admin.filmes.edit', ['filme' => $filme]) }}"
+                                    class="btn btn-primary btn-sm" role="button" aria-pressed="true">Alterar</a>
+                            </td>
+                            <td>
 
-                                <form action="{{route('admin.filmes.destroy', ['filme' => $filme])}}" method="POST">
+                                <form action="{{ route('admin.filmes.destroy', ['filme' => $filme]) }}" method="POST">
                                     @csrf
-                                    @method("DELETE")
+                                    @method('DELETE')
                                     <input type="submit" class="btn btn-danger btn-sm" value="Apagar">
                                 </form>
 
-                        </td>
+                            </td>
 
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-            {{$filmes->links()}}
+            {{ $filmes->links() }}
         </div>
     </div>
 
